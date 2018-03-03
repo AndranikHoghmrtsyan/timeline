@@ -1,0 +1,19 @@
+database name   id2776381_timeline
+login           id2776381_andranik62
+password        aaa619800
+host            localhost
+
+site   http://hoghmrtsyan-andranik.000webhostapp.com
+
+
+control panel
+
+https://www.000webhost.com/
+mail hoghmrtsyan.and@mail.ru
+password andranik62
+
+
+filezila
+host files.000webhost.com
+username   hoghmrtsyan-andranik
+password   aaa619800

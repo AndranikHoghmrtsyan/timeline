@@ -1,0 +1,10 @@
+#registr_form{
+		display:none;
+
+}
+th,td{text-align: center}
+textarea{
+	resize: none;
+	overflow-y: hidden;
+	
+}

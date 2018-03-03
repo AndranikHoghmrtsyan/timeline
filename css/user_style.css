@@ -1,0 +1,12 @@
+#login_form,#timeline,#profile_form{
+		display:none;
+
+}
+
+#desc{
+	resize: none;
+	overflow-y: hidden;
+	
+}
+body{background-color:#CBDEF0;}
+.navbar{background-color:#8EA09E;}
