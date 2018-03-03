@@ -17,3 +17,9 @@ filezila
 host files.000webhost.com
 username   hoghmrtsyan-andranik
 password   aaa619800
+
+
+github
+usernam  AndranikHoghmrtsyan
+password aaa619800
+mail hoghmrtsyan.and@mail.ru
