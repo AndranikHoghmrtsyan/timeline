@@ -37,15 +37,16 @@
       echo "<td><img src=$src width=50></td>";
 
       echo  '<td>';
-      echo "<select class='begin_time'>
-              <option>$begin_time</option>
-              <option>09 : 00</option>
-              <option>10 : 00</option>
-              <option>11 : 00</option>
-              <option>12 : 00</option>
-              <option >13 : 00</option>
-              <option>14 : 00</option>
-            </select>";
+      echo "<input type='time' class='begin_time' value=$begin_time style='background-color:red;color:white;border-radius:25%'>";
+      // echo "<select class='begin_time'>
+      //         <option>$begin_time</option>
+      //         <option>09 : 00</option>
+      //         <option>10 : 00</option>
+      //         <option>11 : 00</option>
+      //         <option>12 : 00</option>
+      //         <option >13 : 00</option>
+      //         <option>14 : 00</option>
+      //       </select>";
       echo '</td>';
 
       if(strnatcmp($begin,$begin_time)>0)
@@ -55,18 +56,7 @@
           echo  "<td>$lunch_begin</td>";
           echo  "<td>$lunch_end</td>";
           echo '<td>';
-             echo "<select class='end_time'>
-                      <option>$end_time</option>
-                      <option>14 : 00</option>
-                      <option>15 : 00</option>
-                      <option>16 : 00</option>
-                      <option>17 : 00</option>
-                      <option>18 : 00</option>
-                      <option>19 : 00</option>
-                      <option>20 : 00</option>
-                      <option >21 : 00</option>
-                      <option>22 : 00</option>
-                  </select>";
+              echo "<input type='time' class='end_time' value=$end_time style='background-color:red;color:white'>";
           echo '</td>';
           echo  "<td>$end</td>";
           echo  "<td class='user_desc' contenteditable>$description</td>";
