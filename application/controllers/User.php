@@ -54,7 +54,7 @@ public function __construct(){
      date_default_timezone_set('Asia/Yerevan');
 
 	$this->user_model->set_time($id,$time);
-     $time1=date('H : i');
+     $time1=date('H:i');
       echo $time1;
 	} 
  public function set_description(){

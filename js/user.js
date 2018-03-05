@@ -47,8 +47,7 @@ $('#login').click(function(){
           $('.time').addClass("btn-info"); 
 
           $('#begin_time').text(data.user.begin_time);
-          $('#lunch_begin_time').text(data.user.lunch_begin_time);
-          $('#lunch_end_time').text(data.user.lunch_end_time)
+         
           $('#end_time').text(data.user.end_time)
           $('#desc').text(data.user.description);
            

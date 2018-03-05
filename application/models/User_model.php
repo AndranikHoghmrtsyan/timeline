@@ -22,13 +22,22 @@ class User_model extends CI_Model {
 
     if(!$this->has_day_record($id)){
      	 $this->db->select('begin_time,end_time');
-     	 $row=$this->db->get('users')->row();
-    	 $begin_time=$row->begin_time;
-  	     $end_time=$row->end_time;
-  	     $this->db->query("INSERT INTO timeline(user_id,day,begin_time1,end_time1)values($id,curdate(),'$begin_time','$end_time')");
+         $row=$this->db->get_where('users',array('id' => $id))->row();
+    	 $begin_time=$row->begin_time.':00';
+  	     $end_time=$row->end_time.':00';
+  	     $sql="INSERT INTO timeline(user_id,day,begin_time1,end_time1)values($id,curdate(),'$begin_time','$end_time')";
+  	     $this->db->query($sql);
 		}
 		
-	    return $this->db->query("SELECT * from timeline,users WHERE user_id=`users`.id and user_id=$id and day=curdate()")->result_array();
+	    return $this->db->query("SELECT 
+	    	TIME_FORMAT(`begin`, '%H:%i') as `begin`,
+	    	TIME_FORMAT(`end`, '%H:%i') as `end`,
+	    	TIME_FORMAT(`lunch_begin`, '%H:%i') as `lunch_begin`,
+	    	TIME_FORMAT(`lunch_end`, '%H:%i') as `lunch_end`,
+	    	description,
+	    	begin_time,
+	    	end_time 
+	    	from timeline,users WHERE user_id=`users`.id and `users`.id=$id and day=curdate()")->result_array();
 
 	}
 	
@@ -36,8 +45,8 @@ class User_model extends CI_Model {
        return $this->db->query("SELECT user_id from timeline WHERE user_id=$id and day=curdate()")->num_rows();
 	}
 	public function set_time($id,$time){
-		$time_value=date('H : i');
-         $this->db->query("UPDATE timeline SET $time='$time_value'  WHERE user_id=$id AND day=curdate()");
+		
+         $this->db->query("UPDATE timeline SET $time=CURRENT_TIME()  WHERE user_id=$id AND day=curdate()");
 		
 
 	}
