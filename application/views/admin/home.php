@@ -37,28 +37,20 @@
       echo "<td><img src=$src width=50></td>";
 
       echo  '<td>';
-      echo "<input type='time' class='begin_time' value=$begin_time style='background-color:red;color:white;border-radius:25%'>";
-      // echo "<select class='begin_time'>
-      //         <option>$begin_time</option>
-      //         <option>09 : 00</option>
-      //         <option>10 : 00</option>
-      //         <option>11 : 00</option>
-      //         <option>12 : 00</option>
-      //         <option >13 : 00</option>
-      //         <option>14 : 00</option>
-      //       </select>";
+      echo "<input type='time' class='begin_time' value=$begin_time >";
       echo '</td>';
 
       if(strnatcmp($begin,$begin_time)>0)
-          echo  "<td style='color:red'>$begin</td>";
+          echo  "<td ><input type='time' class='begin' value=$begin style='background-color:red;color:white;border-radius:30%'></td>";
       else 
-      	  echo  "<td >$begin</td>";
-          echo  "<td>$lunch_begin</td>";
-          echo  "<td>$lunch_end</td>";
+      	  echo  "<td ><input type='time' class='begin' value=$begin style='background-color:blue;color:white;border-radius:30%'></td>";
+          echo  "<td><input type='time' class='lunch_begin' value=$lunch_begin style='background-color:blue;color:white'></td>";
+
+          echo  "<td><input type='time' class='lunch_end' value=$lunch_end style='background-color:blue;color:white'></td>";
           echo '<td>';
-              echo "<input type='time' class='end_time' value=$end_time style='background-color:red;color:white'>";
+              echo "<input type='time' class='end_time' value=$end_time>";
           echo '</td>';
-          echo  "<td>$end</td>";
+          echo  "<td><input type='time' class='end' value=$end style='background-color:blue;color:white'></td>";
           echo  "<td class='user_desc' contenteditable>$description</td>";
           echo  "<td class='admin_desc' contenteditable>$admin_desc</td>";
           echo  '<td><button class="today_update btn btn-success">Խմբագրել</button> </td>';

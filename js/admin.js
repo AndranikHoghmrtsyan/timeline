@@ -144,22 +144,30 @@ $('.update_worker').click(function(){
 $('.today_update').click(function(){
     var parentTr=$(this).parents('tr');
     var id=parentTr.attr('id');
+    var begin=parentTr.find('.begin').val();
     var begin_time=parentTr.find('.begin_time').val();
+    var end=parentTr.find('.end').val();
     var end_time=parentTr.find('.end_time').val();
+    var lunch_begin=parentTr.find('.lunch_begin').val();
+    var lunch_end=parentTr.find('.lunch_end').val();
     var user_desc=parentTr.find('.user_desc').text();
     var admin_desc=parentTr.find('.admin_desc').text();
     $.ajax({
-           url:base_url+'admin/update_today',
+           url:base_url+'admin/edit_user_today_timeline',
            type:'post',
            data:{
              id:id,
              begin_time:begin_time,
+             begin:begin,
              end_time:end_time,
+             end:end,
+             lunch_begin:lunch_begin,
+             lunch_end:lunch_end,
              user_desc:user_desc,
              admin_desc:admin_desc
            },
            success:function(data){
-            
+            alert(data)
           }
        });
 });
