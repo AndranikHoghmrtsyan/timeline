@@ -89,5 +89,67 @@ public function add_user($name,$surname){
       $this->db->update('timeline', $data); 
       return $this->db->last_query();
   }
+  public function get_week_data($id_comp){
+      $week_day=getdate()['wday'];
+      $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
+      
+      $sql="
+       SELECT
+       `users`.`id`,
+       `users`.`name`,
+       `users`.`surname`,
+       `users`.`image`,
+       `timeline`.`day`,
+       `begin`,
+       `lunch_begin`,
+       `lunch_end`,
+       `end`,
+       `begin_time1`,
+       `end_time1`,
+       `description`,
+       `admin_desc`,
+       if(`begin`-`begin_time1`>0,TIME_TO_SEC(TIMEDIFF(`begin`,`begin_time1`)),0) as ushacum
+       FROM `users`,`timeline`
+       WHERE `users`.`id`=`timeline`.`user_id` and `day`>'$sunday' and `id_comp`='$id_comp'";
+      
+      $res=$this->db->query($sql)->result_array();
+        $sum=$count=0;
 
+      foreach($res as $key=>$row){
+        $user_ids[]=$row['id'];
+        $res[$key]['count_ushacum']=0;
+        $res[$key]['sum_ushacum']=0;
+      }
+      $user_ids=array_unique($user_ids);
+
+      foreach($user_ids as $id){ 
+            $count_ushacum=0;
+            $sum_ushacum=0;
+         foreach($res as $row){
+           if($row['id']==$id && $row['ushacum']>0){
+               $count_ushacum++; 
+               $sum_ushacum+=$row['ushacum'];
+            }
+         }
+       foreach($res as $k=>$row1)
+        if($row1['id']==$id){
+          $res[$k]['count_ushacum']=$count_ushacum;
+          $sec=$sum_ushacum%60;
+          $min=$sum_ushacum/60%60;
+          $hour=(int)($sum_ushacum/3600);
+          
+          $res[$k]['sum_ushacum']="$hour:$min:$sec";
+       }
+     }
+      echo '<pre>';
+      print_r($res);
+
+  }
+// select count(ushacum),sum(ushacum), tmp.*
+// from (
+//     select users.name, timeline.*, if(`begin`-`begin_time1`>0,TIME_TO_SEC(TIMEDIFF(begin,begin_time1))/60,0) as ushacum
+//     from users,timeline
+//     where day>'2018-03-04' and id_comp=2) as tmp
+// where tmp.ushacum>0
+// group by name
 }
