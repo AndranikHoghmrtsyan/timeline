@@ -104,13 +104,10 @@ class Admin extends CI_Controller {
   	echo 'images/'.$_FILES['file']['name'];
 
   }
-  // public function update_today(){
-  //     $id=$_POST['id'];
-  //     $begin_time=$_POST['begin_time'];
-  //     $end_time=$_POST['end_time'];
-  //     $user_desc=$_POST['user_desc'];
-  //     $admin_desc=$_POST['admin_desc'];
-  //     echo $this->admin_model->update_today($id,$begin_time,$end_time,$user_desc,$admin_desc);
-  // }  
+  public function week(){
+     $id_comp=$_SESSION['id_comp'];
+      $data['data']=$this->admin_model->get_week_data($id_comp);
+      
+  }  
 	
 }

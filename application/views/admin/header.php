@@ -22,8 +22,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a class="navbar-brand" ><?php echo $company_name ?></a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="<?php echo base_url('admin/home')?>">Այսօր</a></li>
       <li><a href="<?php echo base_url('admin/workers')?>">Աշխատողներ</a></li>
+      <li><a href="<?php echo base_url('admin/home')?>">Այսօր</a></li>
+      <li><a href="<?php echo base_url('admin/week')?>">Այս շաբաթ</a></li>
       <li><a href="<?php echo base_url('admin/logout')?>">Ելք</a></li>
     </ul>
   </div>
