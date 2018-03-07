@@ -2,11 +2,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin_model extends CI_Model {
+  public function __construct(){
+     parent::__construct();
+     
+
+  }
 	public function check_admin($login,$pass){
         $this->db->select('id_comp');
         $res=$this->db->get_where('admin',['login'=>$login,'password'=>$pass])->row();
         return $res->id_comp;
 	}
+  
 	public function get_today_userdata($id_comp){
 		$data['present']= $this->db->query("SELECT
      users.`id`,
@@ -93,13 +99,13 @@ public function add_user($name,$surname){
       $week_day=getdate()['wday'];
       $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
       
-      $sql="
+      $sql=" 
        SELECT
        `users`.`id`,
-       `users`.`name`,
-       `users`.`surname`,
-       `users`.`image`,
-       `timeline`.`day`,
+       `name`,
+       `surname`,
+       `image`,
+       `day`,
        `begin`,
        `lunch_begin`,
        `lunch_end`,
@@ -108,43 +114,72 @@ public function add_user($name,$surname){
        `end_time1`,
        `description`,
        `admin_desc`,
-       if(`begin`-`begin_time1`>0,TIME_TO_SEC(TIMEDIFF(`begin`,`begin_time1`)),0) as ushacum
-       FROM `users`,`timeline`
-       WHERE `users`.`id`=`timeline`.`user_id` and `day`>'$sunday' and `id_comp`='$id_comp'";
+       `late`
+       FROM `users` left join `timeline`
+       on `users`.`id`=`timeline`.`user_id` where `day`>'$sunday' and `id_comp`='$id_comp'";
       
       $res=$this->db->query($sql)->result_array();
-        $sum=$count=0;
+      $sql= "SELECT  `users`.`id`,count(`late`>0) as count_late,sum(`late`) as total_late from `users` left join `timeline`
+       on `users`.`id`=`timeline`.`user_id` where `day`>'$sunday'  group by `users`.`id` order by count_late";
+       $late_users=$this->db->query($sql)->result_array();
+echo $sql;
+      // foreach($late_users as $w)
+      //    $late_ids[]=$w['user_id']; 
 
-      foreach($res as $key=>$row){
-        $user_ids[]=$row['id'];
-        $res[$key]['count_ushacum']=0;
-        $res[$key]['sum_ushacum']=0;
-      }
-      $user_ids=array_unique($user_ids);
+      // foreach($res as $key=>$row){ 
+      //      if(in_array($row['user_id'],$late_ids)){
+      //         foreach($late_users as $item)
+      //           if($item['user_id']==$row['user_id']){
+      //               $res[$key]['count_late']=$item['count_late'];    
+      //               $res[$key]['total_late']=$item['total_late'];    
+      //           }
 
-      foreach($user_ids as $id){ 
-            $count_ushacum=0;
-            $sum_ushacum=0;
-         foreach($res as $row){
-           if($row['id']==$id && $row['ushacum']>0){
-               $count_ushacum++; 
-               $sum_ushacum+=$row['ushacum'];
-            }
-         }
-       foreach($res as $k=>$row1)
-        if($row1['id']==$id){
-          $res[$k]['count_ushacum']=$count_ushacum;
-          $sec=$sum_ushacum%60;
-          $min=$sum_ushacum/60%60;
-          $hour=(int)($sum_ushacum/3600);
+
+      //      }
+      //      else{
+      //          $res[$key]['count_late']=0;    
+      //          $res[$key]['total_late']=0;    
+      //      }
+      //    } 
+      // $res=usort($res,'compare');
+     
+      
+
+
+
+     //    $sum=$count=0;
+
+     //  foreach($res as $key=>$row){
+     //    $user_ids[]=$row['id'];
+     //    $res[$key]['count_ushacum']=0;
+     //    $res[$key]['sum_ushacum']=0;
+     //  }
+     //  $user_ids=array_unique($user_ids);
+
+     //  foreach($user_ids as $id){ 
+     //        $count_ushacum=0;
+     //        $sum_ushacum=0;
+     //     foreach($res as $row){
+     //       if($row['id']==$id && $row['ushacum']>0){
+     //           $count_ushacum++; 
+     //           $sum_ushacum+=$row['ushacum'];
+     //        }
+     //     }
+     //   foreach($res as $k=>$row1)
+     //    if($row1['id']==$id){
+     //      $res[$k]['count_ushacum']=$count_ushacum;
+     //      $sec=$sum_ushacum%60;
+     //      $min=$sum_ushacum/60%60;
+     //      $hour=(int)($sum_ushacum/3600);
           
-          $res[$k]['sum_ushacum']="$hour:$min:$sec";
-       }
-     }
+     //      $res[$k]['sum_ushacum']="$hour:$min:$sec";
+     //   }
+     // }
       echo '<pre>';
-      print_r($res);
+      print_r($late_users);
 
   }
+  
 // select count(ushacum),sum(ushacum), tmp.*
 // from (
 //     select users.name, timeline.*, if(`begin`-`begin_time1`>0,TIME_TO_SEC(TIMEDIFF(begin,begin_time1))/60,0) as ushacum

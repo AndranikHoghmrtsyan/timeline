@@ -102,7 +102,7 @@ $('#login').click(function(){
        type:'post',
        data:{id:id,time:time},
       success:function(data){
-      
+      console.log(data)
        $('#'+time+'_real').html(data);
        $('#'+time).attr("disabled", true);
        $('#'+time).removeClass("btn-info");
