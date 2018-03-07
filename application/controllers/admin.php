@@ -106,7 +106,12 @@ class Admin extends CI_Controller {
   }
   public function week(){
      $id_comp=$_SESSION['id_comp'];
-      $data['data']=$this->admin_model->get_week_data($id_comp);
+     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
+         $this->load->view('admin/header',$data); 
+		$data['workers']=$this->admin_model->get_week_data($id_comp); 
+         $this->load->view('admin/week',$data);
+      
+
       
   }  
 	
