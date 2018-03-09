@@ -106,13 +106,69 @@ class Admin extends CI_Controller {
   }
   public function week(){
      $id_comp=$_SESSION['id_comp'];
-     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
-         $this->load->view('admin/header',$data); 
-		$data['workers']=$this->admin_model->get_week_data($id_comp); 
-         $this->load->view('admin/week',$data);
-      
+     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
+     $data['workers']=$this->admin_model->get_week_data($id_comp);   
+     $this->load->view('admin/header',$data); 
+     $this->load->view('admin/week',$data);
+  } 
+  public function get_worker_week_data(){
+       $id=$this->input->post('id');
+       $res=$this->admin_model->get_worker_week_data($id);
+      echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><tr>';
+       foreach($res as $row){
+           $begin_time=$row['begin_time1'];
+           $begin=$row['begin'];
+           $lunch_begin=$row['lunch_begin'];
+           $lunch_end=$row['lunch_end'];
+           $end_time=$row['end_time1'];
+           $end=$row['end'];
+           $description=$row['description'];
+           $late='';
+           
+           $admin_desc=$row['admin_desc'];
+           $day=$row['day'];
+           echo "<tr id=$id>";
+           echo "<td class='day'>$day</td>";
+           echo "<td><input type='time' class='begin_time' value=$begin_time ></td>";
+           echo "<td><input type='time' class='begin' value=$begin ></td>";
+           echo "<td><input type='time' class='lunch_begin' value=$lunch_begin ></td>";
+           echo "<td><input type='time' class='lunch_end' value=$lunch_end></td>";
+           echo "<td><input type='time' class='end_time' value=$end_time ></td>";
+           echo "<td><input type='time' class='end' value=$end ></td>";
+           echo "<td class='description' contenteditable>$description</td>";
+           echo "<td class='admin_desc' contenteditable>$admin_desc</td>";
+           if($row['late']){
+           if($row['late']>0){
+            $late=$row['late'];
+            echo "<td style='color:red'>$late</td>";
+           }
+           elseif($row['late']<0){
+            $late=(int)-$row['late'];
+            echo "<td style='color:green'>$late</td>";
+           }
+           } 
+           else
+            echo "<td></td>";
 
-      
-  }  
+           
+           echo '<td><button class="week_update btn btn-success">Խմբագրել</button> </td>';
+           echo '</tr>';
+
+
+       }
+
+     echo '</table>';
+     
+
+
+
+
+  } 
+  public function edit_worker_week_data(){
+
+      $res=$this->admin_model->edit_worker_week_data($this->input->post());
+print_r($res);die;
+
+  }
 	
 }

@@ -171,5 +171,58 @@ $('.today_update').click(function(){
           }
        });
 });
+$('.week_worker').click(function(){
+  var id=$(this).attr('id');
+ $.ajax({
+         url:base_url+'admin/get_worker_week_data',
+         type:'post',
+         data:{id:id},
+         success:function(data){
+           
+           $('#worker_week_data').html(data);
+
+           $('.week_update').click(function(){
+             var parentTr=$(this).parents('tr');
+             var id=parentTr.attr('id');
+             var begin=parentTr.find('.begin').val();
+             var begin_time=parentTr.find('.begin_time').val();
+             var end=parentTr.find('.end').val();
+             var end_time=parentTr.find('.end_time').val();
+             var lunch_begin=parentTr.find('.lunch_begin').val();
+             var lunch_end=parentTr.find('.lunch_end').val();
+             var user_desc=parentTr.find('.description').text();
+             var admin_desc=parentTr.find('.admin_desc').text();
+             var day=parentTr.find('.day').text();
+             $.ajax({
+                 url:base_url+'admin/edit_worker_week_data',
+                 type:'post',
+                 data:{
+                   id:id,
+                   begin_time1:begin_time,
+                   begin:begin,
+                   end_time1:end_time,
+                   end:end,
+                   lunch_begin:lunch_begin,
+                   lunch_end:lunch_end,
+                   description:user_desc,
+                   admin_desc:admin_desc,
+                   day:day
+                },
+           success:function(data){
+            alert(data)
+          }
+       });
+
+
+                 
+
+          });
+
+     
+         }
+
+      });
+  });
+
 
 });

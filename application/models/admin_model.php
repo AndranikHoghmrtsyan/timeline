@@ -93,6 +93,7 @@ public function add_user($name,$surname){
          'end_time1'=>$end_time,
          'description'=>$user_desc,
          'admin_desc'=>$admin_desc
+
        );
       $this->db->where('user_id', $id);
       $this->db->update('timeline', $data); 
@@ -101,31 +102,64 @@ public function add_user($name,$surname){
   public function get_week_data($id_comp){
       $week_day=getdate()['wday'];
       $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
-      
       $sql=" 
-       SELECT
+       SELECT DISTINCT
        `users`.`id`,
        `name`,
        `surname`,
        `image`,
-       `day`,
-       `begin`,
-       `lunch_begin`,
-       `lunch_end`,
-       `end`,
-       `begin_time1`,
-       `end_time1`,
-       `description`,
-       `admin_desc`,
-       `late`,
-       (select sum(`late`) from `timeline` as t2 where t2.user_id=t1.user_id) as total_late,
-       (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>0) as count_late
+       (select sum(`late`) from `timeline` as t2 where t2.user_id=t1.user_id and t2.late>5) as total_late,
+       (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>5) as count_late
        FROM `users` left join `timeline` as t1
-       on `users`.`id`=t1.`user_id` where `day`>'$sunday' and `id_comp`='$id_comp' order by count_late desc,total_late desc";
-      
+       on `users`.`id`=t1.`user_id` where `day`>'$sunday' and `id_comp`='$id_comp' order by count_late desc,total_late desc
+       ";
      return $this->db->query($sql)->result_array();
-   
+  }
+  public function get_worker_week_data($id){
+      $week_day=getdate()['wday'];
+      $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
+
+      $sql="SELECT 
+           TIME_FORMAT(`begin`, '%H:%i') as `begin`,
+           TIME_FORMAT(`end`, '%H:%i') as `end`,
+           TIME_FORMAT(`begin_time1`, '%H:%i') as `begin_time1`,
+           TIME_FORMAT(`end_time1`, '%H:%i') as `end_time1`,
+           TIME_FORMAT(`lunch_begin`, '%H:%i') as `lunch_begin`,
+           TIME_FORMAT(`lunch_end`, '%H:%i') as `lunch_end`,
+           `description`,
+           `admin_desc`,
+           `late`,
+           `day`
+          FROM `timeline` 
+          WHERE day>$sunday and user_id=$id 
+          order by day desc";
+      return $this->db->query($sql)->result_array();
+  }
+  public function edit_worker_week_data($data){
+      $user_id=$data['id'];
+      $day=$data['day'];
+      $begin=strtotime($data['begin']);
+      $begin_time1=strtotime($data['begin_time1']);
+      $late="";
+      $delta=(int)(abs($begin-$begin_time1)/60);
+      if($delta>5)
+        $late=$delta;
+      
+      $data1=array(
+         'begin_time1'=> $data['begin_time1'],
+         'begin'=> $data['begin'],
+         'end_time1'=> $data['end_time1'],
+         'end'=> $data['end'],
+         'lunch_begin'=> $data['lunch_begin'],
+         'lunch_end'=> $data['lunch_end'],
+         'description'=> $data['description'],
+         'admin_desc'=> $data['admin_desc'],
+         'late'=>$late
+        );
      
+      $this->db->where(['user_id'=>$user_id,'day'=>$day]); 
+      $this->db->update('timeline', $data1); 
+      return $this->db->last_query();
   }
 
 }
