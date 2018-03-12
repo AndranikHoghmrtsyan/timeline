@@ -104,18 +104,22 @@ class Admin extends CI_Controller {
   	echo 'images/'.$_FILES['file']['name'];
 
   }
-  public function week(){
+  public function month(){
      $id_comp=$_SESSION['id_comp'];
      $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
-     $data['workers']=$this->admin_model->get_week_data($id_comp);   
+     $data['workers']=$this->admin_model->get_month_data($id_comp);   
      $this->load->view('admin/header',$data); 
-     $this->load->view('admin/week',$data);
+     $this->load->view('admin/month',$data);
   } 
-  public function get_worker_week_data(){
+  public function get_worker_month_data(){
        $id=$this->input->post('id');
-       $res=$this->admin_model->get_worker_week_data($id);
-      echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><tr>';
+       $res=$this->admin_model->get_worker_month_data($id);
+// echo '<pre>';
+//                     print_r($res);die;
+              
+      echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
        foreach($res as $row){
+
            $begin_time=$row['begin_time1'];
            $begin=$row['begin'];
            $lunch_begin=$row['lunch_begin'];
@@ -140,18 +144,18 @@ class Admin extends CI_Controller {
            if($row['late']){
            if($row['late']>0){
             $late=$row['late'];
-            echo "<td style='color:red'>$late</td>";
+            echo "<td class='late' style='color:red'>$late</td>";
            }
            elseif($row['late']<0){
             $late=(int)-$row['late'];
-            echo "<td style='color:green'>$late</td>";
+            echo "<td class='late' style='color:green'>$late</td>";
            }
            } 
            else
             echo "<td></td>";
 
            
-           echo '<td><button class="week_update btn btn-success">Խմբագրել</button> </td>';
+           echo '<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
            echo '</tr>';
 
 
@@ -164,11 +168,24 @@ class Admin extends CI_Controller {
 
 
   } 
-  public function edit_worker_week_data(){
+  public function edit_worker_month_data(){
+//print_r($this->input->post());die;
+      $res=$this->admin_model->edit_worker_month_data($this->input->post());
+    $begin=strtotime($this->input->post('begin'));
+      $begin_time1=strtotime($this->input->post('begin_time1'));
+      $late="";
+      $delta=(int)(abs($begin-$begin_time1)/60);
+      if($delta>5)
+        $late=(int)(($begin-$begin_time1)/60);
+      echo $late;
 
-      $res=$this->admin_model->edit_worker_week_data($this->input->post());
-print_r($res);die;
 
   }
-	
+	 public function year(){
+     $id_comp=$_SESSION['id_comp'];
+     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
+     $this->load->view('admin/header',$data); 
+     $this->load->view('admin/year',$data); 
+
+  }
 }

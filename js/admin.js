@@ -171,17 +171,17 @@ $('.today_update').click(function(){
           }
        });
 });
-$('.week_worker').click(function(){
+$('.month_worker').click(function(){
   var id=$(this).attr('id');
  $.ajax({
-         url:base_url+'admin/get_worker_week_data',
+         url:base_url+'admin/get_worker_month_data',
          type:'post',
          data:{id:id},
          success:function(data){
            
-           $('#worker_week_data').html(data);
+           $('#worker_month_data').html(data);
 
-           $('.week_update').click(function(){
+           $('.month_update').click(function(){
              var parentTr=$(this).parents('tr');
              var id=parentTr.attr('id');
              var begin=parentTr.find('.begin').val();
@@ -193,8 +193,9 @@ $('.week_worker').click(function(){
              var user_desc=parentTr.find('.description').text();
              var admin_desc=parentTr.find('.admin_desc').text();
              var day=parentTr.find('.day').text();
+             var late=parentTr.find('.late');
              $.ajax({
-                 url:base_url+'admin/edit_worker_week_data',
+                 url:base_url+'admin/edit_worker_month_data',
                  type:'post',
                  data:{
                    id:id,
@@ -209,7 +210,7 @@ $('.week_worker').click(function(){
                    day:day
                 },
            success:function(data){
-            alert(data)
+           // alert(data)
           }
        });
 

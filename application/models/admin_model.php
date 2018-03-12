@@ -54,7 +54,8 @@ class Admin_model extends CI_Model {
                `lunch_begin`='$lunch_begin',
                `lunch_end`='$lunch_end',
                `admin_desc`='$admin_desc',
-               `description`='$description'
+               `description`='$description',
+               `late`=(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))/60
               WHERE `user_id`=$id AND `day`=curdate()";	
            
        $this->db->query($sql);
@@ -99,9 +100,9 @@ public function add_user($name,$surname){
       $this->db->update('timeline', $data); 
       return $this->db->last_query();
   }
-  public function get_week_data($id_comp){
-      $week_day=getdate()['wday'];
-      $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
+  public function get_month_data($id_comp){
+      // $month_day=getdate()['wday'];
+      // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
       $sql=" 
        SELECT DISTINCT
        `users`.`id`,
@@ -111,13 +112,13 @@ public function add_user($name,$surname){
        (select sum(`late`) from `timeline` as t2 where t2.user_id=t1.user_id and t2.late>5) as total_late,
        (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>5) as count_late
        FROM `users` left join `timeline` as t1
-       on `users`.`id`=t1.`user_id` where `day`>'$sunday' and `id_comp`='$id_comp' order by count_late desc,total_late desc
+       on `users`.`id`=t1.`user_id` where MONTH(`day`)=MONTH(curdate()) and `id_comp`='$id_comp' order by count_late desc,total_late desc
        ";
      return $this->db->query($sql)->result_array();
   }
-  public function get_worker_week_data($id){
-      $week_day=getdate()['wday'];
-      $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$week_day day" ) );
+  public function get_worker_month_data($id){
+      // $month_day=getdate()['wday'];
+      // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
 
       $sql="SELECT 
            TIME_FORMAT(`begin`, '%H:%i') as `begin`,
@@ -131,11 +132,11 @@ public function add_user($name,$surname){
            `late`,
            `day`
           FROM `timeline` 
-          WHERE day>$sunday and user_id=$id 
+          WHERE MONTH(`day`)=MONTH(curdate()) and user_id=$id 
           order by day desc";
       return $this->db->query($sql)->result_array();
   }
-  public function edit_worker_week_data($data){
+  public function edit_worker_month_data($data){
       $user_id=$data['id'];
       $day=$data['day'];
       $begin=strtotime($data['begin']);
@@ -143,7 +144,7 @@ public function add_user($name,$surname){
       $late="";
       $delta=(int)(abs($begin-$begin_time1)/60);
       if($delta>5)
-        $late=$delta;
+        $late=(int)(($begin-$begin_time1)/60);
       
       $data1=array(
          'begin_time1'=> $data['begin_time1'],

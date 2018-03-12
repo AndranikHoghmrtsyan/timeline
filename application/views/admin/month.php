@@ -4,10 +4,11 @@
          <div class="col-sm-3" >
             <table id="user_list" class="table" >
             	<tr><th></th><th>Անուն Ազգանուն</th><th>ՈՒշացում</th></tr>
-              <?php   
+              <?php 
+
                  foreach ($workers as $worker){
 	                $id=$worker['id'];
-	                $name=$worker['name'];
+                  $name=$worker['name'];
 	                $surname=$worker['surname'];
                     $src=base_url($worker['image']);
                     $total_late='00 : 00';
@@ -19,7 +20,7 @@
                        $total_late=$hour.' : '.$min;
                     }
                     $count_late=$worker['count_late'];
-                    echo "<tr class='week_worker' id=$id>";
+                    echo "<tr class='month_worker' id=$id>";
                     echo  "<td id=$id ><img src='$src' class='img-circle' height=60 ></td><td>$name $surname</td><td>$count_late ($total_late)</td></tr>";
                  }
           ?>
@@ -36,7 +37,7 @@
          
          <div class="col-sm-6" >
           <div>aaaa</div>
-          <div id="worker_week_data"></div>
+          <div id="worker_month_data"></div>
           </div>
           <div class="col-sm-3" >
           </div>
