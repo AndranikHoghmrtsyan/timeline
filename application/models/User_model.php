@@ -45,8 +45,8 @@ class User_model extends CI_Model {
        return $this->db->query("SELECT user_id from timeline WHERE user_id=$id and day=curdate()")->num_rows();
 	}
 	public function set_time($id,$time){
-		 
-		  	$sql="UPDATE timeline SET `begin`=CURRENT_TIME(),if(`begin`-`begin_time1`>5,`late`=TIME_TO_SEC(TIMEDIFF(`begin`,`begin_time1`))/60,`late`=0)  WHERE user_id=$id AND day=curdate()";
+		
+		  	$sql="UPDATE timeline SET $time=CURRENT_TIME(),`late`=(TIME_TO_SEC(`begin`)-TIME_TO_SEC(`begin_time1`))/60 WHERE user_id=$id AND day=curdate()";
 		
          $this->db->query($sql);
 
