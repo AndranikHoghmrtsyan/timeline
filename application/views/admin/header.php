@@ -27,6 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <li><a href="<?php echo base_url('admin/month')?>">Այս ամիս</a></li>
       <li><a href="<?php echo base_url('admin/year')?>">Այս տարի</a></li>
       <li><a href="<?php echo base_url('admin/logout')?>">Ելք</a></li>
+      <li><a href="<?php echo base_url('admin/change_password_form')?>">Փոխել ծածկագիրը</a></li>
     </ul>
   </div>
 </nav>

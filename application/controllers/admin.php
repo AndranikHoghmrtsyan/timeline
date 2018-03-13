@@ -22,10 +22,10 @@ class Admin extends CI_Controller {
 
 	public function check_admin()
 	{
-		$login=$this->input->post('login');
+		
 		$pass=$this->input->post('password');
 
-		$id_comp=$this->admin_model->check_admin($login,$pass);
+		$id_comp=$this->admin_model->check_admin($pass);
 	
         if($id_comp!==false){
             $_SESSION['id_comp']=$id_comp;	
@@ -114,54 +114,55 @@ class Admin extends CI_Controller {
   public function get_worker_month_data(){
        $id=$this->input->post('id');
        $res=$this->admin_model->get_worker_month_data($id);
+       echo json_encode($res);
 // echo '<pre>';
 //                     print_r($res);die;
               
-      echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
-       foreach($res as $row){
+     //  echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
+     //   foreach($res as $row){
 
-           $begin_time=$row['begin_time1'];
-           $begin=$row['begin'];
-           $lunch_begin=$row['lunch_begin'];
-           $lunch_end=$row['lunch_end'];
-           $end_time=$row['end_time1'];
-           $end=$row['end'];
-           $description=$row['description'];
-           $late='';
+     //       $begin_time=$row['begin_time1'];
+     //       $begin=$row['begin'];
+     //       $lunch_begin=$row['lunch_begin'];
+     //       $lunch_end=$row['lunch_end'];
+     //       $end_time=$row['end_time1'];
+     //       $end=$row['end'];
+     //       $description=$row['description'];
+     //       $late='';
            
-           $admin_desc=$row['admin_desc'];
-           $day=$row['day'];
-           echo "<tr id=$id>";
-           echo "<td class='day'>$day</td>";
-           echo "<td><input type='time' class='begin_time' value=$begin_time ></td>";
-           echo "<td><input type='time' class='begin' value=$begin ></td>";
-           echo "<td><input type='time' class='lunch_begin' value=$lunch_begin ></td>";
-           echo "<td><input type='time' class='lunch_end' value=$lunch_end></td>";
-           echo "<td><input type='time' class='end_time' value=$end_time ></td>";
-           echo "<td><input type='time' class='end' value=$end ></td>";
-           echo "<td class='description' contenteditable>$description</td>";
-           echo "<td class='admin_desc' contenteditable>$admin_desc</td>";
-           if($row['late']){
-           if($row['late']>0){
-            $late=$row['late'];
-            echo "<td class='late' style='color:red'>$late</td>";
-           }
-           elseif($row['late']<0){
-            $late=(int)-$row['late'];
-            echo "<td class='late' style='color:green'>$late</td>";
-           }
-           } 
-           else
-            echo "<td></td>";
+     //       $admin_desc=$row['admin_desc'];
+     //       $day=$row['day'];
+     //       echo "<tr id=$id>";
+     //       echo "<td class='day'>$day</td>";
+     //       echo "<td><input type='time' class='begin_time' value=$begin_time ></td>";
+     //       echo "<td><input type='time' class='begin' value=$begin ></td>";
+     //       echo "<td><input type='time' class='lunch_begin' value=$lunch_begin ></td>";
+     //       echo "<td><input type='time' class='lunch_end' value=$lunch_end></td>";
+     //       echo "<td><input type='time' class='end_time' value=$end_time ></td>";
+     //       echo "<td><input type='time' class='end' value=$end ></td>";
+     //       echo "<td class='description' contenteditable>$description</td>";
+     //       echo "<td class='admin_desc' contenteditable>$admin_desc</td>";
+     //       if($row['late']){
+     //       if($row['late']>0){
+     //        $late=$row['late'];
+     //        echo "<td class='late' style='color:red'>$late</td>";
+     //       }
+     //       elseif($row['late']<0){
+     //        $late=(int)-$row['late'];
+     //        echo "<td class='late' style='color:green'>$late</td>";
+     //       }
+     //       } 
+     //       else
+     //        echo "<td></td>";
 
            
-           echo '<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
-           echo '</tr>';
+     //       echo '<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
+     //       echo '</tr>';
 
 
-       }
+     //   }
 
-     echo '</table>';
+     // echo '</table>';
      
 
 
@@ -173,7 +174,7 @@ class Admin extends CI_Controller {
       $res=$this->admin_model->edit_worker_month_data($this->input->post());
     $begin=strtotime($this->input->post('begin'));
       $begin_time1=strtotime($this->input->post('begin_time1'));
-      $late="";
+      $late=0;
       $delta=(int)(abs($begin-$begin_time1)/60);
       if($delta>5)
         $late=(int)(($begin-$begin_time1)/60);
@@ -187,5 +188,14 @@ class Admin extends CI_Controller {
      $this->load->view('admin/header',$data); 
      $this->load->view('admin/year',$data); 
 
+  }
+  public function change_password_form(){
+      $id_comp=$_SESSION['id_comp'];
+      $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
+      $this->load->view('admin/header',$data); 
+      $this->load->view('admin/change_password_form');
+  }
+  public function change_password(){
+     print_r($_POST);
   }
 }

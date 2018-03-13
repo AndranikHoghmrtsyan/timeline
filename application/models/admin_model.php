@@ -7,9 +7,9 @@ class Admin_model extends CI_Model {
      
 
   }
-	public function check_admin($login,$pass){
+	public function check_admin($pass){
         $this->db->select('id_comp');
-        $res=$this->db->get_where('admin',['login'=>$login,'password'=>$pass])->row();
+        $res=$this->db->get_where('admin',['password'=>$pass])->row();
         return $res->id_comp;
 	}
   
@@ -130,7 +130,8 @@ public function add_user($name,$surname){
            `description`,
            `admin_desc`,
            `late`,
-           `day`
+           `day`,
+           `user_id`
           FROM `timeline` 
           WHERE MONTH(`day`)=MONTH(curdate()) and user_id=$id 
           order by day desc";

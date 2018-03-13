@@ -177,10 +177,9 @@ $('.month_worker').click(function(){
          url:base_url+'admin/get_worker_month_data',
          type:'post',
          data:{id:id},
+         dataType:'JSON',
          success:function(data){
-           
-           $('#worker_month_data').html(data);
-
+           show_user_month_data(data);
            $('.month_update').click(function(){
              var parentTr=$(this).parents('tr');
              var id=parentTr.attr('id');
@@ -197,33 +196,75 @@ $('.month_worker').click(function(){
              $.ajax({
                  url:base_url+'admin/edit_worker_month_data',
                  type:'post',
+                 dataType:'JSON',
                  data:{
-                   id:id,
-                   begin_time1:begin_time,
-                   begin:begin,
-                   end_time1:end_time,
-                   end:end,
-                   lunch_begin:lunch_begin,
-                   lunch_end:lunch_end,
-                   description:user_desc,
-                   admin_desc:admin_desc,
-                   day:day
+                    id:id,
+                    begin_time1:begin_time,
+                    begin:begin,
+                    end_time1:end_time,
+                    end:end,
+                    lunch_begin:lunch_begin,
+                    lunch_end:lunch_end,
+                    description:user_desc,
+                    admin_desc:admin_desc,
+                    day:day
                 },
-           success:function(data){
-           // alert(data)
-          }
-       });
-
-
-                 
-
-          });
-
-     
-         }
+                success:function(data){
+                  console.log(data)
+                 if(data>0)
+                    late.html(data)
+                  else if(data<0)
+                    late.html(-1*data);
+                }
+             });
+           });
+        }
 
       });
   });
-
+function show_user_month_data(data){
+      console.log(data);
+       var html='<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
+       for(var i=0;i<data.length;i++){
+          var user_id=data[i]['user_id'];
+          var begin_time=data[i]['begin_time1'];
+          var begin=data[i]['begin'];
+          var lunch_begin=data[i]['lunch_begin'];
+          var lunch_end=data[i]['lunch_end'];
+          var end_time=data[i]['end_time1'];
+          var end=data[i]['end'];
+          var description=data[i]['description'];
+          var late='';
+          var admin_desc=data[i]['admin_desc'];
+          var day=data[i]['day'];
+          html+="<tr id="+user_id+">";
+          html+= "<td class='day'>"+day+"</td>";
+          html+= "<td><input type='time' class='begin_time' value="+begin_time+"></td>";
+          html+= "<td><input type='time' class='begin' value="+begin+" ></td>";
+          html+= "<td><input type='time' class='lunch_begin' value="+lunch_begin+" ></td>";
+          html+= "<td><input type='time' class='lunch_end' value="+lunch_end+"></td>";
+          html+= "<td><input type='time' class='end_time' value="+end_time+" ></td>";
+          html+= "<td><input type='time' class='end' value="+end+"></td>";
+          html+= "<td class='description' contenteditable>"+description+"</td>";
+          html+= "<td class='admin_desc' contenteditable>"+admin_desc+"</td>";
+          if(data[i]['late']!=0){
+              if(data[i]['late']>0){
+                  late=data[i]['late'];
+                  html+="<td class='late' style='color:red'>"+late+"</td>";
+              }
+              else if(data[i]['late']<0){
+                  late=-1*data[i]['late'];
+                 html+="<td class='late' style='color:green'>"+late+"</td>";
+              }
+           } 
+           else{
+               html+="<td></td>";
+           }
+           html+='<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
+           html+='</tr>';
+      }
+      html+='</table>';
+      $("#worker_month_data").html(html);
+}
 
 });
