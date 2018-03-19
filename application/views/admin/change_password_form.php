@@ -13,6 +13,12 @@
 <input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Փոխել ծածկագիրը..." value="Փոխել ծածկագիրը">
 
 </form>
+<?php
+if(isset($_SESSION['msg'])){
+   echo '<div style="color:red">'.$_SESSION['msg'].'</div>';
+   unset($_SESSION['msg']);
+}
+?>
 </div><!--/col-sm-6-->
 </div><!--/row-->
 </div>

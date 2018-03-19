@@ -196,6 +196,18 @@ class Admin extends CI_Controller {
       $this->load->view('admin/change_password_form');
   }
   public function change_password(){
-     print_r($_POST);
+     $pass=$this->input->post('password');
+     $new_pass1=$this->input->post('password1');
+     $new_pass2=$this->input->post('password2');
+     if($new_pass1!=$new_pass2){
+     	$_SESSION['msg']="password not matching";
+     	redirect(base_url('admin/change_password_form'));
+     }
+     if(!$this->admin_model->change_password($pass,$new_pass1))
+         $_SESSION['msg']="password on use";
+     else  
+         $_SESSION['msg']="Your password is changed successfuly";
+     redirect(base_url('admin/change_password_form')); 
+
   }
 }
