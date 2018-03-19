@@ -163,5 +163,17 @@ public function add_user($name,$surname){
       $this->db->update('timeline', $data1); 
       return $this->db->last_query();
   }
+  public function change_password($pass,$new_pass){
+      $data = array(
+         'password' => $new_pass
+      );
+      $this->db->where('password', $pass);
+      $res=$this->db->update('admin', $data); 
+      if(!$res)
+         return false;
+      return true;   
+  }
+ 
+
 
 }
