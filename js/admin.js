@@ -210,8 +210,7 @@ $('.month_worker').click(function(){
                     day:day
                 },
                 success:function(data){
-                  console.log(data)
-                 if(data>0)
+                  if(data>0)
                     late.html(data)
                   else if(data<0)
                     late.html(-1*data);
@@ -223,7 +222,7 @@ $('.month_worker').click(function(){
       });
   });
 function show_user_month_data(data){
-      console.log(data);
+     
        var html='<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
        for(var i=0;i<data.length;i++){
           var user_id=data[i]['user_id'];
@@ -266,5 +265,42 @@ function show_user_month_data(data){
       html+='</table>';
       $("#worker_month_data").html(html);
 }
+$('.workers_year').click(function(){
+    var id=$(this).attr('id');
+
+    $.ajax({
+        url:base_url+'admin/get_worker_year_data',
+        type:'post',
+        dataType:'JSON',
+        data:{
+           id:id
+        },
+        success:function(data){
+          show_user_year_data(data);
+            
+        }
+
+
+    })
+})
+function show_user_year_data(data){
+    console.log(data)
+    var month=[0,'Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];  
+    var html='<table class="table"><tr><th>Ամիս</th><th>Ուշացումների քանակ</th><th>ՈՒշացում</th><tr>';
+    for(var i=0;i<data.length;i++){
+        var m=data[i]['month'];
+        var monthName=month[m];
+        var total_late=data[i]['total_late'];
+        var count_late=data[i]['count_late'];
+        html+="<tr id="+m+">";
+        html+= "<td >"+monthName+"</td>";
+        html+= "<td >"+count_late+"</td>";
+        html+= "<td >"+total_late+"</td>";
+    }
+    html+='</table>';
+    $("#worker_year_data").html(html);
+}
+
+
 
 });

@@ -100,7 +100,11 @@ public function add_user($name,$surname){
       $this->db->update('timeline', $data); 
       return $this->db->last_query();
   }
-  public function get_month_data($id_comp){
+  public function get_period_data($id_comp,$period='year'){
+    if($period=='year')
+        $where="YEAR(`day`)=YEAR(curdate())";
+    elseif($period=='month')
+      $where="MONTH(`day`)=MONTH(curdate())";
       // $month_day=getdate()['wday'];
       // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
       $sql=" 
@@ -109,10 +113,10 @@ public function add_user($name,$surname){
        `name`,
        `surname`,
        `image`,
-       (select sum(`late`) from `timeline` as t2 where t2.user_id=t1.user_id and t2.late>5) as total_late,
-       (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>5) as count_late
+       (select sum(`late`) from `timeline` as t2 where  t2.user_id=t1.user_id and t2.late>5 AND $where) as total_late,
+       (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>5 AND $where ) as count_late
        FROM `users` left join `timeline` as t1
-       on `users`.`id`=t1.`user_id` where MONTH(`day`)=MONTH(curdate()) and `id_comp`='$id_comp' order by count_late desc,total_late desc
+       on `users`.`id`=t1.`user_id` where $where and `id_comp`='$id_comp' order by count_late desc,total_late desc
        ";
      return $this->db->query($sql)->result_array();
   }
@@ -173,7 +177,12 @@ public function add_user($name,$surname){
          return false;
       return true;   
   }
- 
+ public function get_worker_year_data($id){
+     $sql="SELECT MONTH(`day`) AS month,sum(`late`) AS total_late,count(`late`) AS count_late FROM `timeline` 
+        WHERE  `user_id`=$id AND YEAR(`day`)=YEAR(curdate()) AND late>5 GROUP BY month ORDER BY month";
+     return $this->db->query($sql)->result_array();
+
+ } 
 
 
 }

@@ -1,4 +1,21 @@
-
+<div class="container">
+    <div class="row"> 
+      <div class="col-sm-3" ></div>
+      <div class="col-sm-6" >
+   
+          <label for="sel1">Select month:</label>
+          <select class="form-control" id="sel1">
+              <option>1</option>
+              <option>2</option>
+              <option >3</option>
+              <option>4</option>
+          </select>
+     
+      </div>      
+      <div class="col-sm-3" ></div>     
+    </div>  
+ 
+</div>
 <div  class="container-fluid">
     <div class="row"> 
          <div class="col-sm-3" >

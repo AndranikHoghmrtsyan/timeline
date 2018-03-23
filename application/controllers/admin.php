@@ -107,7 +107,7 @@ class Admin extends CI_Controller {
   public function month(){
      $id_comp=$_SESSION['id_comp'];
      $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
-     $data['workers']=$this->admin_model->get_month_data($id_comp);   
+     $data['workers']=$this->admin_model->get_period_data($id_comp,'month');   
      $this->load->view('admin/header',$data); 
      $this->load->view('admin/month',$data);
   } 
@@ -184,7 +184,8 @@ class Admin extends CI_Controller {
   }
 	 public function year(){
      $id_comp=$_SESSION['id_comp'];
-     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
+     $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);
+     $data['users']=$this->admin_model->get_period_data($id_comp,$period='year'); 
      $this->load->view('admin/header',$data); 
      $this->load->view('admin/year',$data); 
 
@@ -208,6 +209,12 @@ class Admin extends CI_Controller {
      else  
          $_SESSION['msg']="Your password is changed successfuly";
      redirect(base_url('admin/change_password_form')); 
+
+  }
+  public function get_worker_year_data(){
+  	$id=$this->input->post('id');
+      $data=$this->admin_model->get_worker_year_data($id);
+      echo json_encode($data);
 
   }
 }
