@@ -1,21 +1,28 @@
+
+
+
 <div class="container">
     <div class="row"> 
       <div class="col-sm-3" ></div>
       <div class="col-sm-6" >
    
-          <label for="sel1">Select month:</label>
-          <select class="form-control" id="sel1">
-              <option>1</option>
-              <option>2</option>
-              <option >3</option>
-              <option>4</option>
-          </select>
+       <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li class=" list-group-item list-group-item-action " href="#" active>Action</li>
+    <li class=" list-group-item list-group-item-action" href="#">Another action</li>
+    <li class=" list-group-item list-group-item-action" href="#">Something else here</li>
+  </ul>
+</div>
      
       </div>      
       <div class="col-sm-3" ></div>     
     </div>  
  
 </div>
+
 <div  class="container-fluid">
     <div class="row"> 
          <div class="col-sm-3" >
