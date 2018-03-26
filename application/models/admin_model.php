@@ -183,6 +183,12 @@ public function add_user($name,$surname){
      return $this->db->query($sql)->result_array();
 
  } 
+ public function get_months_of_year($id_comp){
+      $sql="SELECT distinct MONTH(`day`) AS month FROM `timeline`,users 
+        WHERE  `user_id`=`users`.id AND id_comp=$id_comp ORDER BY month";
+     return $this->db->query($sql)->result_array();
+
+ }
 
 
 }
