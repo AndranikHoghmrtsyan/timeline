@@ -106,6 +106,11 @@ class Admin extends CI_Controller {
   }
   public function month(){
      $id_comp=$_SESSION['id_comp'];
+     if(!isset($_SESSION['month']))
+        $_SESSION['month']=date('n');
+
+     $data['months_names']=$this->admin_model->get_months_of_year($id_comp);
+
      $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
      $data['workers']=$this->admin_model->get_period_data($id_comp,'month');   
      $this->load->view('admin/header',$data); 
@@ -215,6 +220,13 @@ class Admin extends CI_Controller {
   	$id=$this->input->post('id');
       $data=$this->admin_model->get_worker_year_data($id);
       echo json_encode($data);
+
+  }
+  public function change_month(){
+      //echo $_SESSION['month']=$this->input->post('id');
+  	echo $this->input->post('id');
+      //redirect(base_url('admin/month')); 
+
 
   }
 }

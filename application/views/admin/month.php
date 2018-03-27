@@ -1,6 +1,10 @@
 
 
+<?php
+$all_month=[0,'Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];  
 
+ $month=$_SESSION['month']; 
+?>
 <div class="container">
     <div class="row"> 
       <div class="col-sm-3" ></div>
@@ -8,12 +12,25 @@
    
        <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-    Dropdown button
+  <?php 
+echo $all_month[$month];
+  ?>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li class=" list-group-item list-group-item-action " href="#" active>Action</li>
-    <li class=" list-group-item list-group-item-action" href="#">Another action</li>
-    <li class=" list-group-item list-group-item-action" href="#">Something else here</li>
+       <?php 
+
+           foreach($months_names as $row){
+            $m=$row['month'];
+            $monthname=$all_month[$m];
+            if($m==$month)
+                echo "<li  id=$m class=' list-group-item list-group-item-action active month' href='#' >$monthname</li>";
+            else
+               echo "<li id=$m class=' list-group-item list-group-item-action month' href='#'>$monthname</li>";
+
+        }
+
+   ?>
+    
   </ul>
 </div>
      

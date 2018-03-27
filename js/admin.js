@@ -301,6 +301,25 @@ function show_user_year_data(data){
     $("#worker_year_data").html(html);
 }
 
+$('.list-group-item').hover(function() {
+$(this).css('cursor','pointer');
+});
+
+  $('.month').click(function(){
+    var id=$(this).attr('id');
+
+    $.ajax({
+        url:base_url+'admin/change_month',
+        type:'post',
+        data:{
+           id:id
+        },
+        success:function(data){
+          alert(data);
+            
+        }
 
 
+    })
+      })
 });
