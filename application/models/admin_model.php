@@ -100,11 +100,13 @@ public function add_user($name,$surname){
       $this->db->update('timeline', $data); 
       return $this->db->last_query();
   }
-  public function get_period_data($id_comp,$period='year'){
-    if($period=='year')
-        $where="YEAR(`day`)=YEAR(curdate())";
-    elseif($period=='month')
-      $where="MONTH(`day`)=MONTH(curdate())";
+  public function get_month_data($id_comp,$month,$year){
+     
+      $where="YEAR(`day`)=$year and MONTH(`day`)=$month";
+
+   
+
+  
       // $month_day=getdate()['wday'];
       // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
       $sql=" 
@@ -118,9 +120,10 @@ public function add_user($name,$surname){
        FROM `users` left join `timeline` as t1
        on `users`.`id`=t1.`user_id` where $where and `id_comp`='$id_comp' order by count_late desc,total_late desc
        ";
+      
      return $this->db->query($sql)->result_array();
   }
-  public function get_worker_month_data($id){
+  public function get_worker_month_data($id,$month,$year){
       // $month_day=getdate()['wday'];
       // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
 
@@ -137,8 +140,9 @@ public function add_user($name,$surname){
            `day`,
            `user_id`
           FROM `timeline` 
-          WHERE MONTH(`day`)=MONTH(curdate()) and user_id=$id 
+          WHERE MONTH(`day`)=$month and YEAR(`day')=$year and user_id=$id 
           order by day desc";
+        return   $sql;
       return $this->db->query($sql)->result_array();
   }
   public function edit_worker_month_data($data){
@@ -183,9 +187,9 @@ public function add_user($name,$surname){
      return $this->db->query($sql)->result_array();
 
  } 
- public function get_months_of_year($id_comp){
+ public function get_months_of_year($id_comp,$year){
       $sql="SELECT distinct MONTH(`day`) AS month FROM `timeline`,users 
-        WHERE  `user_id`=`users`.id AND id_comp=$id_comp ORDER BY month";
+        WHERE  `user_id`=`users`.id AND id_comp=$id_comp AND YEAR(`day`)=$year ORDER BY month";
      return $this->db->query($sql)->result_array();
 
  }

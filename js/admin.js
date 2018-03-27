@@ -177,8 +177,9 @@ $('.month_worker').click(function(){
          url:base_url+'admin/get_worker_month_data',
          type:'post',
          data:{id:id},
-         dataType:'JSON',
+         
          success:function(data){
+          console.log(data)
            show_user_month_data(data);
            $('.month_update').click(function(){
              var parentTr=$(this).parents('tr');
@@ -315,7 +316,7 @@ $(this).css('cursor','pointer');
            id:id
         },
         success:function(data){
-          alert(data);
+         location.reload();
             
         }
 
