@@ -1,8 +1,22 @@
 
 
-<div class="container">
+<div class="container-fluid">
          
-  <table class="table table-bordered">
+  
+    <?php
+   if(empty($userdata))die;
+   $all_month=[0,'Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];
+   $week_day=['Երկուշաբթի','Երեքշաբթի','Չորեքշաբթի','Հինգշաբթի','ՈՒրբաթ','Շաբաթ','Կիրակի'];  
+  //0 = Monday, 1 = Tuesday, 2 = Wednesday, 3 = Thursday, 4 = Friday, 5 = Saturday, 6 = Sunday.  
+   
+  if(!empty($userdata['present']))
+    foreach($userdata['present'] as $day=>$value)
+      if(!empty($value)){
+       $monthname=$all_month[date('n')]; 
+       
+       $dayname=$week_day[$value[0]['weekday']]; 
+echo "<table class='table table-bordered'>
+       <caption>$monthname $day $dayname</caption>
     <thead>
       <tr>
         <th></th>
@@ -15,13 +29,12 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
-    <?php
-   if(empty($userdata))die;
-   // echo '<pre>';
-  if(!empty($userdata['present']))
-    foreach($userdata['present'] as $row){
-    	$id=$row['id'];
+    <tbody>";
+        foreach($value as $row)
+      
+    {
+   
+       	$id=$row['id'];
     	$begin_time=$row['begin_time1'];
     	$begin=$row['begin'];
     	//$lunch_begin_time=$row['lunch_begin_time'];
@@ -55,25 +68,27 @@
           echo  "<td class='admin_desc' contenteditable>$admin_desc</td>";
           echo  '<td><button class="today_update btn btn-success">Խմբագրել</button> </td>';
           echo   '</tr>';
+    }      
+          echo  '</tbody>';
+          echo  '</table><br>';
     }
-    if(!empty($userdata['mess'])){
-       foreach($userdata['mess'] as $row){
+    // if(!empty($userdata['mess'])){
+    //    foreach($userdata['mess'] as $row){
      
-          $user=$row['name'].' '.$row['surname'];
+    //       $user=$row['name'].' '.$row['surname'];
           
-          $src=base_url($row['image']);
+    //       $src=base_url($row['image']);
        
-          echo "<tr >";
-          echo "<td><img src=$src width=50></td>";
-          echo  "<td colspan=2>$user</td>";
-        echo  "<td colspan=7></td>";
+    //       echo "<tr >";
+    //       echo "<td><img src=$src width=50></td>";
+    //       echo  "<td colspan=2>$user</td>";
+    //     echo  "<td colspan=7></td>";
           
-          echo   '</tr>';
-    }
-    }
+    //       echo   '</tr>';
+    // }
+    // }
     ?>
-    </tbody>
-  </table>
+   
 </div>
  
 </body>

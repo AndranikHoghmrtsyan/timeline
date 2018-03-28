@@ -5,6 +5,10 @@ class Admin extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
+        if(!isset($_SESSION['month']))
+              $_SESSION['month']=date('n');
+        if(!isset($_SESSION['year']))
+              $_SESSION['year']=date('Y');
         $this->load->model('admin_model');
         $this->load->model('user_model');
     }
@@ -41,7 +45,8 @@ class Admin extends CI_Controller {
 		 $id_comp=$_SESSION['id_comp'];
          $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
          $this->load->view('admin/header',$data); 
-		 $data['userdata']=$this->admin_model->get_today_userdata($id_comp);
+
+		 $data['userdata']=$this->admin_model->get_current_userdata($id_comp);
 		 $this->load->view('admin/home',$data);
    }
 
@@ -106,10 +111,7 @@ class Admin extends CI_Controller {
   }
   public function month(){
      $id_comp=$_SESSION['id_comp'];
-     if(!isset($_SESSION['month']))
-         $_SESSION['month']=date('n');
-     if(!isset($_SESSION['year']))
-         $_SESSION['year']=date('Y');
+    
 
      $data['months_names']=$this->admin_model->get_months_of_year($id_comp,$_SESSION['year']);
    
