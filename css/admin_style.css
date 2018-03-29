@@ -26,3 +26,19 @@ textarea{
     background: rgba(0,0,0,0.15);
     border-radius: 3px 0 0 3px;
 }
+.days td{
+
+
+
+background-color:#F0F0F0;
+}
+.days th{
+background-color:#333333;
+color:white;
+
+}
+.begin,.end,.lunch_begin,.lunch_end{
+
+color:blue;
+
+}

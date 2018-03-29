@@ -46,7 +46,7 @@ class Admin_model extends CI_Model {
      }
      return $data;
 	}
-    public function edit_user_today_timeline($data){
+    public function edit_current_timeline($data){
         
         $id=$data['id'];
       $begin=$data['begin'].':00';  
@@ -57,7 +57,7 @@ class Admin_model extends CI_Model {
       $lunch_end=$data['lunch_end'].':00';
     	$admin_desc=$data['admin_desc'];
     	$description=$data['user_desc'];
-
+      $day=$data['day'];
         $sql="UPDATE timeline 
               SET
                `begin_time1`='$begin_time',
@@ -68,11 +68,11 @@ class Admin_model extends CI_Model {
                `lunch_end`='$lunch_end',
                `admin_desc`='$admin_desc',
                `description`='$description',
-               `late`=(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))/60
-              WHERE `user_id`=$id AND `day`=curdate()";	
+               `late`=IF(ABS(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))>300,(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))/60,0)
+              WHERE `user_id`=$id AND MONTH(`day`)=MONTH(curdate()) and DAY(day)=$day";	
            
        $this->db->query($sql);
-       return $this->db->last_query();
+       //return $this->db->last_query();
       
 }
 public function add_user($name,$surname){
