@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
+        
         if(!isset($_SESSION['month']))
               $_SESSION['month']=date('n');
         if(!isset($_SESSION['year']))
