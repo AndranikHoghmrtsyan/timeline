@@ -5,6 +5,10 @@ class Admin extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
+        if(!isset($_SESSION['month']))
+              $_SESSION['month']=date('n');
+        if(!isset($_SESSION['year']))
+              $_SESSION['year']=date('Y');
         $this->load->model('admin_model');
         $this->load->model('user_model');
     }
@@ -41,7 +45,8 @@ class Admin extends CI_Controller {
 		 $id_comp=$_SESSION['id_comp'];
          $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
          $this->load->view('admin/header',$data); 
-		 $data['userdata']=$this->admin_model->get_today_userdata($id_comp);
+
+		 $data['userdata']=$this->admin_model->get_current_userdata($id_comp);
 		 $this->load->view('admin/home',$data);
    }
 
@@ -106,78 +111,29 @@ class Admin extends CI_Controller {
   }
   public function month(){
      $id_comp=$_SESSION['id_comp'];
-     if(!isset($_SESSION['month']))
-        $_SESSION['month']=date('n');
+    
 
-     $data['months_names']=$this->admin_model->get_months_of_year($id_comp);
-
+     $data['months_names']=$this->admin_model->get_months_of_year($id_comp,$_SESSION['year']);
+   
      $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
-     $data['workers']=$this->admin_model->get_period_data($id_comp,'month');   
+       
+     $data['workers']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
+
      $this->load->view('admin/header',$data); 
+     
      $this->load->view('admin/month',$data);
   } 
   public function get_worker_month_data(){
        $id=$this->input->post('id');
-       $res=$this->admin_model->get_worker_month_data($id);
-       echo json_encode($res);
-// echo '<pre>';
-//                     print_r($res);die;
-              
-     //  echo '<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
-     //   foreach($res as $row){
-
-     //       $begin_time=$row['begin_time1'];
-     //       $begin=$row['begin'];
-     //       $lunch_begin=$row['lunch_begin'];
-     //       $lunch_end=$row['lunch_end'];
-     //       $end_time=$row['end_time1'];
-     //       $end=$row['end'];
-     //       $description=$row['description'];
-     //       $late='';
-           
-     //       $admin_desc=$row['admin_desc'];
-     //       $day=$row['day'];
-     //       echo "<tr id=$id>";
-     //       echo "<td class='day'>$day</td>";
-     //       echo "<td><input type='time' class='begin_time' value=$begin_time ></td>";
-     //       echo "<td><input type='time' class='begin' value=$begin ></td>";
-     //       echo "<td><input type='time' class='lunch_begin' value=$lunch_begin ></td>";
-     //       echo "<td><input type='time' class='lunch_end' value=$lunch_end></td>";
-     //       echo "<td><input type='time' class='end_time' value=$end_time ></td>";
-     //       echo "<td><input type='time' class='end' value=$end ></td>";
-     //       echo "<td class='description' contenteditable>$description</td>";
-     //       echo "<td class='admin_desc' contenteditable>$admin_desc</td>";
-     //       if($row['late']){
-     //       if($row['late']>0){
-     //        $late=$row['late'];
-     //        echo "<td class='late' style='color:red'>$late</td>";
-     //       }
-     //       elseif($row['late']<0){
-     //        $late=(int)-$row['late'];
-     //        echo "<td class='late' style='color:green'>$late</td>";
-     //       }
-     //       } 
-     //       else
-     //        echo "<td></td>";
-
-           
-     //       echo '<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
-     //       echo '</tr>';
-
-
-     //   }
-
-     // echo '</table>';
-     
-
-
-
+       $res=$this->admin_model->get_worker_month_data($id,$_SESSION['month'],$_SESSION['year']);
+       echo ($res);
+       //echo json_encode($res);
 
   } 
   public function edit_worker_month_data(){
-//print_r($this->input->post());die;
+
       $res=$this->admin_model->edit_worker_month_data($this->input->post());
-    $begin=strtotime($this->input->post('begin'));
+      $begin=strtotime($this->input->post('begin'));
       $begin_time1=strtotime($this->input->post('begin_time1'));
       $late=0;
       $delta=(int)(abs($begin-$begin_time1)/60);
@@ -223,9 +179,9 @@ class Admin extends CI_Controller {
 
   }
   public function change_month(){
-      //echo $_SESSION['month']=$this->input->post('id');
-  	echo $this->input->post('id');
-      //redirect(base_url('admin/month')); 
+     $_SESSION['month']=$this->input->post('id');
+  	
+     //redirect(base_url('admin/month')); 
 
 
   }
