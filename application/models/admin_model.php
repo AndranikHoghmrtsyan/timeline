@@ -32,7 +32,8 @@ class Admin_model extends CI_Model {
                `image`,
                day(day) as monthday,
                month(curdate()) as month,
-               WEEKDAY(day) as weekday
+               WEEKDAY(day) as weekday,
+               late
             FROM users join timeline on user_id=`users`.id
             WHERE   id_comp=$id_comp and year(day)=year(curdate()) and month(day)=month(curdate()) and day(day)=$i")
             ->result_array();
