@@ -47,7 +47,7 @@ console.log($(this))
    
 
     $.ajax({
-        // Your server script to process the upload
+        
         url: base_url+'admin/upload',
         type: 'POST',
 
@@ -55,18 +55,12 @@ console.log($(this))
         data: new FormData($('form')[0]),
 
         // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
+       
         cache: false,
         contentType: false,
         processData: false,
-
-        // Custom XMLHttpRequest
-       
         success:function(d){
-        parentTR.find('img').attr("src",base_url+d);
-       
-        //$('#new_img').attr("src",base_url+d);
-
+            parentTR.find('img').attr("src",base_url+d);
         }
     });
 });
@@ -141,7 +135,7 @@ $('.update_worker').click(function(){
           }
        });
 });
-$('.today_update').click(function(){
+$('.current_update').click(function(){
     var parentTr=$(this).parents('tr');
     var id=parentTr.attr('id');
     var begin=parentTr.find('.begin').val();
@@ -152,8 +146,10 @@ $('.today_update').click(function(){
     var lunch_end=parentTr.find('.lunch_end').val();
     var user_desc=parentTr.find('.user_desc').text();
     var admin_desc=parentTr.find('.admin_desc').text();
+    var day=$(this).parents('table').attr('id');
+
     $.ajax({
-           url:base_url+'admin/edit_user_today_timeline',
+           url:base_url+'admin/edit_current_timeline',
            type:'post',
            data:{
              id:id,
@@ -164,10 +160,16 @@ $('.today_update').click(function(){
              lunch_begin:lunch_begin,
              lunch_end:lunch_end,
              user_desc:user_desc,
-             admin_desc:admin_desc
+             admin_desc:admin_desc,
+             day:day
            },
            success:function(data){
-            alert(data)
+            if(data>0)
+              parentTr.find('.begin').css('color','red');
+            else if(data<0)
+              parentTr.find('.begin').css('color','green');
+            else
+              parentTr.find('.begin').css('color','blue');
           }
        });
 });
