@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
+        $_SESSION['id_comp']=2;
         if(!isset($_SESSION['month']))
               $_SESSION['month']=date('n');
         if(!isset($_SESSION['year']))
@@ -23,7 +24,8 @@ class Admin extends CI_Controller {
 		else $this->load->view('admin/login');
 	}
 
-    public function load_view($id_comp,$page,$data){
+    public function load_view($page,$data=[]){
+         $id_comp=$_SESSION['id_comp'];  
          $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
          $this->load->view('admin/header',$data); 
          $this->load->view("admin/$page",$data);
@@ -46,7 +48,7 @@ class Admin extends CI_Controller {
 			  redirect(base_url('admin/index'));
 		$id_comp=$_SESSION['id_comp'];	
 		$data['userdata']=$this->admin_model->get_current_userdata($id_comp);
-		$this->load_view($id_comp,'home',$data);
+		$this->load_view('home',$data);
     }
 
 	public function logout(){
@@ -72,7 +74,7 @@ class Admin extends CI_Controller {
 			  redirect(base_url('admin/index'));
 		$id_comp=$_SESSION['id_comp'];
 		$w['workers']=$this->user_model->get_users_by_company($id_comp);
-        $this->load_view($id_comp,'workers',$w);
+        $this->load_view('workers',$w);
 	}
 	public function add_user(){
         $name=$_POST['name'];
@@ -110,7 +112,7 @@ class Admin extends CI_Controller {
         $id_comp=$_SESSION['id_comp'];
         $data['months_names']=$this->admin_model->get_months_of_year($id_comp,$_SESSION['year']);
         $data['workers']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
-        $this->load_view($id_comp,'month',$data);
+        $this->load_view('month',$data);
     } 
 
     public function get_worker_month_data(){
@@ -133,13 +135,15 @@ class Admin extends CI_Controller {
 
 	public function year(){
         $id_comp=$_SESSION['id_comp'];
-        $data['users']=$this->admin_model->get_period_data($id_comp,$period='year'); 
-        $this->load_view($id_comp,'year',$data); 
+        $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
+        //$data['months_names']=$this->admin_model->get_months_of_year($id_comp,$_SESSION['year']);
+        $data['available_years']=$this->admin_model->get_available_years($id_comp); 
+        $this->load_view('year',$data); 
     }
 
     public function change_password_form(){
-        $id_comp=$_SESSION['id_comp'];
-        $this->load_view($id_comp,'change_password_form',$data);
+        
+        $this->load_view('change_password_form');
     }
 
     public function change_password(){
@@ -168,4 +172,9 @@ class Admin extends CI_Controller {
         $_SESSION['month']=$this->input->post('id');
   	    //redirect(base_url('admin/month')); 
     } 
+    public function change_year(){
+        $_SESSION['year']=$this->input->post('year');
+        redirect(base_url('admin/year')); 
+    } 
+    
 }

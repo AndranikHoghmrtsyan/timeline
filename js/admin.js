@@ -325,4 +325,22 @@ $(this).css('cursor','pointer');
 
     })
       })
+
+  $('.year').click(function(){
+    var year=$(this).attr('id');
+
+    $.ajax({
+        url:base_url+'admin/change_year',
+        type:'post',
+        data:{
+           year:year
+        },
+        success:function(data){
+         location.reload();
+            
+        }
+
+
+    })
+      })
 });

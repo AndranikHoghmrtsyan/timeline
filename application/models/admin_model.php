@@ -37,13 +37,13 @@ class Admin_model extends CI_Model {
             FROM users join timeline on user_id=`users`.id
             WHERE   id_comp=$id_comp and year(day)=year(curdate()) and month(day)=month(curdate()) and day(day)=$i")
             ->result_array();
-     }
+      }
     
-     for($i=$count_month_days;$i>=1;$i--){
-         $sql="select image,name,surname from users  WHERE id_comp=$id_comp and id not in(select user_id from timeline where day(day)=$i and year(day)=year(curdate()) and month(day)=month(curdate()) )";
-         $data['mess'][$i]=$this->db->query($sql)->result_array();
+      for($i=$count_month_days;$i>=1;$i--){
+          $sql="select image,name,surname from users  WHERE id_comp=$id_comp and id not in(select user_id from timeline where day(day)=$i and year(day)=year(curdate()) and month(day)=month(curdate()) )";
+          $data['mess'][$i]=$this->db->query($sql)->result_array();
       
-     }
+      }
      return $data;
 	}
     public function edit_current_timeline($data){
@@ -112,6 +112,22 @@ public function add_user($name,$surname){
       $this->db->where('user_id', $id);
       $this->db->update('timeline', $data); 
       return $this->db->last_query();
+  }
+  public function get_year_data($id_comp,$year){
+      $where="YEAR(`day`)=$year";
+      $sql=" 
+       SELECT DISTINCT
+       `users`.`id`,
+       `name`,
+       `surname`,
+       `image`,
+       (select sum(`late`) from `timeline` as t2 where  t2.user_id=t1.user_id and t2.late>5 AND $where) as total_late,
+       (select count(`late`) from `timeline` as t3 where t3.user_id=t1.user_id and t3.late>5 AND $where ) as count_late
+       FROM `users` left join `timeline` as t1
+       on `users`.`id`=t1.`user_id` where $where and `id_comp`='$id_comp' order by count_late desc,total_late desc
+       ";
+      
+     return $this->db->query($sql)->result_array();
   }
   public function get_month_data($id_comp,$month,$year){
      
@@ -206,6 +222,15 @@ public function add_user($name,$surname){
      return $this->db->query($sql)->result_array();
 
  }
+public function get_available_years($id_comp){
 
+   $sql="SELECT distinct YEAR(`day`) AS year FROM `timeline`,users 
+        WHERE  `user_id`=`users`.id AND id_comp=$id_comp  ORDER BY year desc";
+     return $this->db->query($sql)->result_array();
+
+
+
+
+} 
 
 }
