@@ -268,11 +268,10 @@ function show_user_month_data(data){
       html+='</table>';
       $("#worker_month_data").html(html);
 }
-$('.workers_year').click(function(){
+$('.individual_workers').click(function(){
     var id=$(this).attr('id');
-
     $.ajax({
-        url:base_url+'admin/get_worker_year_data',
+        url:base_url+'admin/get_worker_month_data',
         type:'post',
         dataType:'JSON',
         data:{
