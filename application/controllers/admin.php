@@ -44,6 +44,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function home(){
+
 		if(!isset($_SESSION['id_comp']))
 			  redirect(base_url('admin/index'));
 		$id_comp=$_SESSION['id_comp'];	
@@ -52,7 +53,7 @@ class Admin extends CI_Controller {
     }
 
 	public function logout(){
-
+       
 	   $id_comp=$_SESSION['id_comp'];
        unset($_SESSION['id_comp']);
        setcookie('id_comp', "", time()-3600,'/');
@@ -70,6 +71,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function workers(){
+		
 		if(!isset($_SESSION['id_comp']))
 			  redirect(base_url('admin/index'));
 		$id_comp=$_SESSION['id_comp'];
@@ -116,10 +118,11 @@ class Admin extends CI_Controller {
     // } 
 
     public function get_worker_month_data(){
-        $id=$this->input->post('id');
+    	$id=$this->input->post('id');
+        $_SESSION['user_id']=$id;
         $res=$this->admin_model->get_worker_month_data($id,$_SESSION['month'],$_SESSION['year']);
-        echo ($res);
-       //echo json_encode($res);
+       
+       echo json_encode($res);
     } 
 
     public function edit_worker_month_data(){
@@ -134,6 +137,7 @@ class Admin extends CI_Controller {
     }
 
 	public function year(){
+		
         $id_comp=$_SESSION['id_comp'];
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['month_data']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
@@ -143,11 +147,12 @@ class Admin extends CI_Controller {
     }
 
     public function change_password_form(){
-        
+        unset($_SESSION['user_id']);
         $this->load_view('change_password_form');
     }
 
     public function change_password(){
+    	
         $pass=$this->input->post('password');
         $new_pass1=$this->input->post('password1');
         $new_pass2=$this->input->post('password2');
@@ -171,13 +176,15 @@ class Admin extends CI_Controller {
     }
     public function change_month(){
         $_SESSION['month']=$this->input->post('id');
-  	    redirect(base_url('admin/year')); 
+  	   // redirect(base_url('admin/year')); 
     } 
     public function change_year(){
+    	unset($_SESSION['user_id']);
         $_SESSION['year']=$this->input->post('year');
         redirect(base_url('admin/year')); 
     } 
     public function individual(){
+    	
         $id_comp=$_SESSION['id_comp'];
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['available_months']=$this->admin_model->get_available_months($id_comp,$_SESSION['year']);

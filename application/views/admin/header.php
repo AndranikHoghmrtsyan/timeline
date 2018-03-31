@@ -31,6 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </ul>
   </div>
 </nav>
-
+<?php 
+unset($_SESSION['user_id']);
+?>
 
 

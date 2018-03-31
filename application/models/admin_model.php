@@ -161,12 +161,11 @@ public function add_user($name,$surname){
            `description`,
            `admin_desc`,
            `late`,
-           `day`,
+           DAY(`day`) as day,
            `user_id`
-          FROM `timeline` 
-          WHERE MONTH(`day`)=$month and YEAR(`day')=$year and user_id=$id 
-          order by day desc";
-        return   $sql;
+          FROM `timeline` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
+         ";
+        
       return $this->db->query($sql)->result_array();
   }
   public function edit_worker_month_data($data){
