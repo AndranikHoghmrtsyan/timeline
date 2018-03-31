@@ -133,11 +133,6 @@ public function add_user($name,$surname){
      
       $where="YEAR(`day`)=$year and MONTH(`day`)=$month";
 
-   
-
-  
-      // $month_day=getdate()['wday'];
-      // $sunday= date( 'Y-m-d', strtotime( date('Y-m-d') . " -$month_day day" ) );
       $sql=" 
        SELECT DISTINCT
        `users`.`id`,
@@ -166,12 +161,11 @@ public function add_user($name,$surname){
            `description`,
            `admin_desc`,
            `late`,
-           `day`,
+           DAY(`day`) as day,
            `user_id`
-          FROM `timeline` 
-          WHERE MONTH(`day`)=$month and YEAR(`day')=$year and user_id=$id 
-          order by day desc";
-        return   $sql;
+          FROM `timeline` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
+         ";
+        
       return $this->db->query($sql)->result_array();
   }
   public function edit_worker_month_data($data){
@@ -216,7 +210,7 @@ public function add_user($name,$surname){
      return $this->db->query($sql)->result_array();
 
  } 
- public function get_months_of_year($id_comp,$year){
+ public function get_available_months($id_comp,$year){
       $sql="SELECT distinct MONTH(`day`) AS month FROM `timeline`,users 
         WHERE  `user_id`=`users`.id AND id_comp=$id_comp AND YEAR(`day`)=$year ORDER BY month";
      return $this->db->query($sql)->result_array();

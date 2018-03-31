@@ -26,7 +26,7 @@
     
                 </ul>
             </div>
-            <table class="table" >
+            <table id="user_list" class="table" >
             	<tr><th></th><th>Անուն</th><th>Ազգանուն</th><th>ՈՒշացում</th><th>Ընդամենը</th></tr>
 
               <?php 
@@ -45,8 +45,8 @@
                         $total_late=$hour.' : '.$min;
                     }
                     $count_late=$worker['count_late'];
-                    echo "<tr>";
-                    echo  "<td><img src='$src' class='img-circle' height=60 ></td>";
+                    echo "<tr class='individual_workers' id=$id>";
+                    echo  "<td id=$id ><img src='$src' class='img-circle' height=60 ></td>";
                     echo "<td>$name</td><td>$surname</td><td>$count_late</td><td>$total_late</td>";
                     echo "</tr>";
                  }
@@ -81,31 +81,8 @@
                </ul>
             </div>
      
-        
-      	    <table  class="table" >
-            	<tr><th></th><th>Անուն</th><th>Ազգանուն</th><th>ՈՒշացում</th><th>Ընդամենը</th></tr>
-              <?php 
-                foreach ($month_data as $worker){
-	                $id=$worker['id'];
-                    $name=$worker['name'];
-	                $surname=$worker['surname'];
-                    $src=base_url($worker['image']);
-                    $total_late='00 : 00';
-                    if($worker['total_late']){
-                        $hour=(int)($worker['total_late']/60);
-                        $hour=($hour<10)?'0'.$hour:$hour;
-                        $min=$worker['total_late']%60;
-                        $min=($min<10)?'0'.$min:$min;
-                        $total_late=$hour.' : '.$min;
-                    }
-                    $count_late=$worker['count_late'];
-                    echo "<tr>";
-                    echo  "<td ><img src='$src' class='img-circle' height=60 ></td>";
-                    echo "<td>$name</td><td>$surname</td><td>$count_late</td><td>$total_late</td>";
-                    echo "</tr>";
-                 }
-           ?>
-           </table>	
+        <div id="worker_month_data"></div>
+      	    
         </div>     
         <div class="col-sm-2" >
         </div>

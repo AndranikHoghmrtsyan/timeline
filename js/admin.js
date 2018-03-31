@@ -241,14 +241,14 @@ function show_user_month_data(data){
           var day=data[i]['day'];
           html+="<tr id="+user_id+">";
           html+= "<td class='day'>"+day+"</td>";
-          html+= "<td><input type='time' class='begin_time' value="+begin_time+"></td>";
-          html+= "<td><input type='time' class='begin' value="+begin+" ></td>";
-          html+= "<td><input type='time' class='lunch_begin' value="+lunch_begin+" ></td>";
-          html+= "<td><input type='time' class='lunch_end' value="+lunch_end+"></td>";
-          html+= "<td><input type='time' class='end_time' value="+end_time+" ></td>";
-          html+= "<td><input type='time' class='end' value="+end+"></td>";
-          html+= "<td class='description' contenteditable>"+description+"</td>";
-          html+= "<td class='admin_desc' contenteditable>"+admin_desc+"</td>";
+          html+= "<td>"+begin_time+"</td>";
+          html+= "<td>"+begin+"</td>";
+          html+= "<td>"+lunch_begin+"</td>";
+          html+= "<td>"+lunch_end+"</td>";
+          html+= "<td>"+end_time+"</td>";
+          html+= "<td>"+end+"</td>";
+          html+= "<td>"+description+"</td>";
+          html+= "<td>"+admin_desc+"</td>";
           if(data[i]['late']!=0){
               if(data[i]['late']>0){
                   late=data[i]['late'];
@@ -262,24 +262,25 @@ function show_user_month_data(data){
            else{
                html+="<td></td>";
            }
-           html+='<td><button class="month_update btn btn-success">Խմբագրել</button> </td>';
+           
            html+='</tr>';
       }
       html+='</table>';
       $("#worker_month_data").html(html);
 }
-$('.workers_year').click(function(){
+$('.individual_workers').click(function(){
     var id=$(this).attr('id');
-
     $.ajax({
-        url:base_url+'admin/get_worker_year_data',
+        url:base_url+'admin/get_worker_month_data',
         type:'post',
         dataType:'JSON',
         data:{
            id:id
         },
         success:function(data){
-          show_user_year_data(data);
+
+       show_user_month_data(data);
+         
             
         }
 
