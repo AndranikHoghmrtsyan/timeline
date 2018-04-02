@@ -22,7 +22,6 @@
                               <th >Ընդ. ավարտ</th>
                               <th colspan=2>Ավարտ</th>
                               <th>Բացատրություն</th>
-                              <th>Տնօրեն</th>
                               <th></th>
                           </tr>
                       </thead>
@@ -39,7 +38,6 @@
     	                    $end=$row['end'];
     	                    $description=$row['description'];
                           $src=base_url($row['image']);
-                          $admin_desc=$row['admin_desc'];
                           if($late>0)
                               $textcolor='red';
                           elseif($late<0)
@@ -55,7 +53,6 @@
                               <td><input type='time' class='end_time' value=<?=$end_time ?>></td>
                               <td><input type='time' class='end' value=<?=$end ?>></td>
                               <td class='user_desc' contenteditable><?=$description ?></td>
-                              <td class='admin_desc' contenteditable><?=$admin_desc ?></td>
                               <td><button class="current_update btn btn-success">Խմբագրել</button> </td>
                           </tr>
       <?php   

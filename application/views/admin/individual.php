@@ -63,7 +63,7 @@
                $month=$_SESSION['month']; 
             ?>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle ind_but" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                    <?=$all_month[$month] ?>
                 </button>
                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -72,9 +72,9 @@
                      $m=$row['month'];
                      $monthname=$all_month[$m];
                      if($m==$month)
-                          echo "<li  id=$m class=' list-group-item list-group-item-action active month' href='#' >$monthname</li>";
+                          echo "<li  id=$m class=' list-group-item list-group-item-action active ind_month' href='#' >$monthname</li>";
                      else
-                          echo "<li id=$m class=' list-group-item list-group-item-action month' href='#'>$monthname</li>";
+                          echo "<li id=$m class=' list-group-item list-group-item-action ind_month' href='#'>$monthname</li>";
 
                   }
                ?>

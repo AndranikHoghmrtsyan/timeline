@@ -8,19 +8,50 @@ public function __construct(){
 
 }
 
+	// public function index()
+	// {
+	// 	//$data['users']=$this->user_model->get_all();
+	// 	$data['companys']=$this->user_model->get_companys();
+	// 	$this->load->view('header',$data);
+	// }
 	public function index()
 	{
-		//$data['users']=$this->user_model->get_all();
-		$data['companys']=$this->user_model->get_companys();
-		$this->load->view('header',$data);
+		unset($_SESSION['id_comp_oper']);
+		// if($this->input->cookie('id_comp')){
+		// 	$id_comp=$this->input->cookie('id_comp');
+		// 	$_SESSION['id_comp']=$id_comp;
+		// 	redirect(base_url("compay/$id"));
+		// }
+		// else 
+			$this->load->view('login');
+	} 
+	public function check_oper(){
+        $oper_pass=$this->input->post('oper_pass');
+        $oper_log=$this->input->post('oper_log');
+        $id_comp=$this->user_model->check_oper($oper_log,$oper_pass);
+        
+        if($id_comp){
+        	$company_name=$this->user_model->get_company_name_by_id($id_comp);
+        	if($this->input->post('remember'))
+               	setcookie('id_comp_oper', $id_comp, time()+3600*24*365*2,'/');
+            $_SESSION['id_comp_oper']=$id_comp;
+            $company_name=$this->user_model->get_company_name_by_id($id_comp);
+            redirect(base_url("$company_name"));
+        }
+        else{
+  	          redirect(base_url("user/index"));
+
+        }
+
 	}
-	public function company($id_comp)
-	{
-		$_SESSION['id_comp']=$id_comp;
-        $header_data['companys']=$this->user_model->get_companys();
-        $this->load->view('header',$header_data);
-		$data['users']=$this->user_model->get_users_by_company($id_comp);
-		$data['company_name']=$this->user_model->get_company_name_by_id($id_comp);
+	public function company($company_name)
+	{ 
+		if(!isset($_SESSION['id_comp_oper']))
+			redirect(base_url("user/index"));
+		
+
+		$data['users']=$this->user_model->get_users_by_company($_SESSION['id_comp_oper']);
+		$data['company_name']=$company_name;
 		$this->load->view('all_users',$data);
 	}
     public function register_form()
@@ -72,5 +103,10 @@ public function update_profile(){
      $password=$_POST['password'];
      $id=$_POST['id'];
      $this->user_model->update_profile($id,$password);
+}
+public function logout(){
+     unset($_SESSION['id_comp_oper']);
+     setcookie('id_comp_oper', "", time()-3600,'/');
+     redirect(base_url("user/index"));
 }
 }

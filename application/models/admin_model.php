@@ -7,9 +7,9 @@ class Admin_model extends CI_Model {
      
 
   }
-	public function check_admin($pass){
+	public function check_admin($log,$pass){
         $this->db->select('id_comp');
-        $res=$this->db->get_where('admin',['password'=>$pass])->row();
+        $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
         return $res->id_comp;
 	}
   
@@ -28,7 +28,6 @@ class Admin_model extends CI_Model {
                TIME_FORMAT(`lunch_begin`, '%H:%i') as `lunch_begin`,
                TIME_FORMAT(`lunch_end`, '%H:%i') as `lunch_end`,
                `description`,
-               `admin_desc`,
                `image`,
                day(day) as monthday,
                month(curdate()) as month,
@@ -55,7 +54,6 @@ class Admin_model extends CI_Model {
       $end_time=$data['end_time'].':00';
       $lunch_begin=$data['lunch_begin'].':00';
       $lunch_end=$data['lunch_end'].':00';
-    	$admin_desc=$data['admin_desc'];
     	$description=$data['user_desc'];
       $day=$data['day'];
         $sql="UPDATE timeline 
@@ -66,7 +64,6 @@ class Admin_model extends CI_Model {
                `end_time1`='$end_time',
                `lunch_begin`='$lunch_begin',
                `lunch_end`='$lunch_end',
-               `admin_desc`='$admin_desc',
                `description`='$description',
                `late`=IF(ABS(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))>300,(TIME_TO_SEC('$begin')-TIME_TO_SEC('$begin_time'))/60,0)
               WHERE `user_id`=$id AND MONTH(`day`)=MONTH(curdate()) and DAY(day)=$day";	
@@ -101,13 +98,11 @@ public function add_user($name,$surname){
       $this->db->where('id', $id);
       $this->db->update('users', $data); 
    }
-  public function update_today($id,$begin_time,$end_time,$user_desc,$admin_desc){
+  public function update_today($id,$begin_time,$end_time,$user_desc){
        $data = array(
          'begin_time1'=>$begin_time,
          'end_time1'=>$end_time,
          'description'=>$user_desc,
-         'admin_desc'=>$admin_desc
-
        );
       $this->db->where('user_id', $id);
       $this->db->update('timeline', $data); 
@@ -159,7 +154,6 @@ public function add_user($name,$surname){
            TIME_FORMAT(`lunch_begin`, '%H:%i') as `lunch_begin`,
            TIME_FORMAT(`lunch_end`, '%H:%i') as `lunch_end`,
            `description`,
-           `admin_desc`,
            `late`,
            DAY(`day`) as day,
            `user_id`
@@ -186,7 +180,6 @@ public function add_user($name,$surname){
          'lunch_begin'=> $data['lunch_begin'],
          'lunch_end'=> $data['lunch_end'],
          'description'=> $data['description'],
-         'admin_desc'=> $data['admin_desc'],
          'late'=>$late
         );
      

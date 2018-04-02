@@ -1,20 +1,58 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<title>Timeline</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+<script src="<?php echo base_url('js/jquery-3.2.1.min.js')?>"></script>
+<script src="<?php echo base_url('js/bootstrap.js')?>"></script>  
+
+<script>var base_url="<?php echo base_url();?>"</script>
+<script src="<?php echo base_url('js/user.js')?>"></script> 
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/user_style.css')?>">
+</head>
+<body>
 
 <!-- begin of content   -->
-<div  class="container">
+<?php
+
+
+   date_default_timezone_set('Asia/Yerevan');
+$arm=['Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր',
+'Երկուշաբթի','Երեքշաբթի','Չորեքշաբթի','Հինգշաբթի','ՈՒրբաթ','Շաբաթ','Կիրակի'];
+$eng=['January','February','March','April','May','June','July','August','September','October','November','December',
+'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sanday'];
+$date=date('j F Y l');
+$date=str_ireplace($eng,$arm,$date);
+
+
+   ?>
+<div  class="container-fluid">
  
-    <div class="row"> 
-         <div class="col-sm-4" >
-             <h1> <?php echo $company_name?></h1>
+    <div class="row" style="background-color:green;"> 
+         <div class="col-sm-2" >
+             <h1 style="color:white"> <?php echo $company_name?></h1>
          </div>
          <div class="col-sm-2" >
              
          </div>
          <div class="col-sm-6" >
          
-             <h1> <?php echo date('d F Y ');?></h1>
+             <h1 style="color:white"> <?=$date;?></h1>
+         </div>
+          <div class="col-sm-2" >
+         
+             <h1><a href="<?=base_url('user/logout')?>"><button class="profile btn btn-danger" style="color:white">Ելք</button></a></h1>
          </div>
    </div>
 </div>
+<div style="height:5px;background-color:yellow"></div>
+<br/>
+<br/>
 <div id="content" class="container">
     <div class="row">
        <!-- first column -->
@@ -45,12 +83,13 @@
            <div id="user_name_and_image"></div>
            <br>
             <br>
-     
+      <br>
+               <br>
         <!--   login form  -->
            <div id="login_form" >
                
-               Նշանաբառ:<input type="text" id="password" >
-               <br>
+               <input type="text" id="password" placeholder="Նշանաբառ:" >
+              <br>
                <br>
                <input type="button" id="login" class="btn btn-success" value="ՄՈՒՏՔ">
                <h2 id="message"></h2>
@@ -117,8 +156,7 @@
   color:#337AB7;
  }
  #aa{
-height: 500px;
-  overflow-y: scroll;
+
 
 
 
