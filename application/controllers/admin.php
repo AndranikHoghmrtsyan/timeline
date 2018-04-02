@@ -34,7 +34,8 @@ class Admin extends CI_Controller {
 	public function check_admin()
 	{
 		$pass=$this->input->post('password');
-		$id_comp=$this->admin_model->check_admin($pass);
+        $log=$this->input->post('login');
+		$id_comp=$this->admin_model->check_admin($log,$pass);
         if($id_comp!==false){
             $_SESSION['id_comp']=$id_comp;	
             if($this->input->post('remember'))
@@ -118,9 +119,9 @@ class Admin extends CI_Controller {
     // } 
 
     public function get_worker_month_data(){
-    	$id=$this->input->post('id');
-        $_SESSION['user_id']=$id;
-        $res=$this->admin_model->get_worker_month_data($id,$_SESSION['month'],$_SESSION['year']);
+    	$user_id=$this->input->post('user_id');
+      
+        $res=$this->admin_model->get_worker_month_data($user_id,$_SESSION['month'],$_SESSION['year']);
        
        echo json_encode($res);
     } 
@@ -147,7 +148,7 @@ class Admin extends CI_Controller {
     }
 
     public function change_password_form(){
-        unset($_SESSION['user_id']);
+       
         $this->load_view('change_password_form');
     }
 
@@ -179,7 +180,7 @@ class Admin extends CI_Controller {
   	   // redirect(base_url('admin/year')); 
     } 
     public function change_year(){
-    	unset($_SESSION['user_id']);
+    	
         $_SESSION['year']=$this->input->post('year');
         redirect(base_url('admin/year')); 
     } 
@@ -191,5 +192,12 @@ class Admin extends CI_Controller {
         $data['available_years']=$this->admin_model->get_available_years($id_comp); 
         $this->load_view('individual',$data); 
     }
+     public function change_ind_month(){
+        $_SESSION['month']=$this->input->post('month');
+        $user_id=$this->input->post('user_id');
+        $res=$this->admin_model->get_worker_month_data($user_id,$_SESSION['month'],$_SESSION['year']);
+        echo json_encode($res);
+      
+    } 
     
 }

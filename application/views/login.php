@@ -15,14 +15,14 @@
   </div>
   <div class="col-sm-4" >
   <h2>Մուտք</h2>
-  <form action="<?php echo base_url('admin/check_admin')?>" method="post">
+  <form action="<?php echo base_url('user/check_oper')?>" method="post">
     <div class="form-group">
       <label for="login">Նշանաբառ:</label>
-      <input type="password" class="form-control" id="login" placeholder="նշանաբառ..." name="login">
+      <input type="password" class="form-control" id="login" placeholder="նշանաբառ..." name="oper_log">
     </div>
     <div class="form-group">
       <label for="pwd">Ծածկագիր:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="password">
+      <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="oper_pass">
     </div>
     <div class="checkbox">
       <label><input type="checkbox" name="remember"> Հիշել</label>

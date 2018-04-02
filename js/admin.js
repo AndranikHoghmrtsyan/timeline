@@ -226,7 +226,7 @@ $('.month_worker').click(function(){
   });
 function show_user_month_data(data){
      
-       var html='<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>Տնօրեն</th><th>ՈՒշացում</th><th></th><tr>';
+       var html='<table class="table"><tr><th>Օր</th><th colspan=2>Սկիզբ</th><th colspan=2>Ընդմիջում</th><th colspan=2>Ավարտ</th><th>Բացատր</th><th>ՈՒշացում</th><th></th><tr>';
        for(var i=0;i<data.length;i++){
           var user_id=data[i]['user_id'];
           var begin_time=data[i]['begin_time1'];
@@ -248,7 +248,6 @@ function show_user_month_data(data){
           html+= "<td>"+end_time+"</td>";
           html+= "<td>"+end+"</td>";
           html+= "<td>"+description+"</td>";
-          html+= "<td>"+admin_desc+"</td>";
           if(data[i]['late']!=0){
               if(data[i]['late']>0){
                   late=data[i]['late'];
@@ -269,13 +268,13 @@ function show_user_month_data(data){
       $("#worker_month_data").html(html);
 }
 $('.individual_workers').click(function(){
-    var id=$(this).attr('id');
+    user_id=$(this).attr('id');
     $.ajax({
         url:base_url+'admin/get_worker_month_data',
         type:'post',
         dataType:'JSON',
         data:{
-           id:id
+           user_id:user_id
         },
         success:function(data){
 
@@ -338,6 +337,25 @@ $(this).css('cursor','pointer');
         },
         success:function(data){
          location.reload();
+            
+        }
+
+
+    })
+      })
+  all_month=[0,'Հունվար','Փետրվար','Մարտ','Ապրիլ','Մայիս','Հունիս','Հուլիս','Օգոստոս','Սեպտեմբեր','Հոկտեմբեր','Նոյեմբեր','Դեկտեմբեր'];  
+   $('.ind_month').click(function(){
+    var month=$(this).attr('id');
+       $('.ind_but').text(all_month[ month]);
+    $.ajax({
+        url:base_url+'admin/change_ind_month',
+        type:'post',
+        dataType:'json',
+        data:{
+           month:month,user_id:user_id
+        },
+        success:function(data){
+        show_user_month_data(data);
             
         }
 

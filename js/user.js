@@ -7,7 +7,7 @@ $(document).ready(function(){
      var name=$(this).find('h4').text();
     var src=$(this).find('img').attr('src');
   
-    $('#user_name_and_image').html("<img src='"+src+"' class='img-circle' height=100 style='float:left'><h4>"+name+"</h4>");
+    $('#user_name_and_image').html("<img src='"+src+"' class='img-circle' height=100 style='float:left'><div style='text-align:center'><h4>"+name+"</h4></div>");
      
       
       $('#login_form').css('display','block');
