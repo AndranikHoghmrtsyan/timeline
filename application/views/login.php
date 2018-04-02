@@ -14,21 +14,30 @@
   <div class="col-sm-4" >
   </div>
   <div class="col-sm-4" >
-  <h2>Մուտք</h2>
+  <h4><a href="<?=base_url('user/change_oper_password_form')?>">Փոխել Գաղտնաբառը</a></h4>
   <form action="<?php echo base_url('user/check_oper')?>" method="post">
     <div class="form-group">
-      <label for="login">Նշանաբառ:</label>
-      <input type="password" class="form-control" id="login" placeholder="նշանաբառ..." name="oper_log">
+      <label for="login">Մուտքանուն:</label>
+      <input type="password" class="form-control" id="login" placeholder="Մուտքանուն..." name="oper_log">
     </div>
     <div class="form-group">
-      <label for="pwd">Ծածկագիր:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="oper_pass">
+      <label for="pwd">Գաղտնաբառ:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Գաղտնաբառ..." name="oper_pass">
     </div>
     <div class="checkbox">
       <label><input type="checkbox" name="remember"> Հիշել</label>
     </div>
     <button type="submit" class="btn btn-default">Մուտք</button>
   </form>
+  <h4 style="color:red">
+  <?php
+if(isset($_SESSION['login_error'])){
+    echo $_SESSION['login_error'];
+    unset($_SESSION['login_error']);
+}
+
+  ?>
+</h4>
 </div>
 </div>
 <div class="col-sm-4" >

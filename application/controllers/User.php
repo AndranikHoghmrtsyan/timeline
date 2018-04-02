@@ -17,20 +17,22 @@ public function __construct(){
 	public function index()
 	{
 		unset($_SESSION['id_comp_oper']);
-		// if($this->input->cookie('id_comp')){
-		// 	$id_comp=$this->input->cookie('id_comp');
-		// 	$_SESSION['id_comp']=$id_comp;
-		// 	redirect(base_url("compay/$id"));
-		// }
-		// else 
+		if($this->input->cookie('id_comp_oper')){
+			$id_comp=$this->input->cookie('id_comp_oper');
+			$_SESSION['id_comp_oper']=$id_comp;
+			$company_name=$this->user_model->get_company_name_by_id($id_comp);
+            redirect(base_url("$company_name"));
+		}
+		else 
 			$this->load->view('login');
 	} 
 	public function check_oper(){
-        $oper_pass=$this->input->post('oper_pass');
-        $oper_log=$this->input->post('oper_log');
-        $id_comp=$this->user_model->check_oper($oper_log,$oper_pass);
-        
-        if($id_comp){
+        $oper_pass=trim($this->input->post('oper_pass'));
+        $oper_log=trim($this->input->post('oper_log'));
+        $res=$this->user_model->check_oper($oper_log,$oper_pass);
+       
+        if($res){
+        	$id_comp=$res->id_comp;
         	$company_name=$this->user_model->get_company_name_by_id($id_comp);
         	if($this->input->post('remember'))
                	setcookie('id_comp_oper', $id_comp, time()+3600*24*365*2,'/');
@@ -39,6 +41,7 @@ public function __construct(){
             redirect(base_url("$company_name"));
         }
         else{
+        	$_SESSION['login_error']="Սխալ նշանաբառ կամ ծածկագիր";
   	          redirect(base_url("user/index"));
 
         }
@@ -46,12 +49,12 @@ public function __construct(){
 	}
 	public function company($company_name)
 	{ 
+
 		if(!isset($_SESSION['id_comp_oper']))
 			redirect(base_url("user/index"));
-		
-
 		$data['users']=$this->user_model->get_users_by_company($_SESSION['id_comp_oper']);
-		$data['company_name']=$company_name;
+		$data['company_name']=$this->user_model->get_company_name_by_id($_SESSION['id_comp_oper']);
+
 		$this->load->view('all_users',$data);
 	}
     public function register_form()
@@ -108,5 +111,32 @@ public function logout(){
      unset($_SESSION['id_comp_oper']);
      setcookie('id_comp_oper', "", time()-3600,'/');
      redirect(base_url("user/index"));
+}
+public function change_oper_password_form(){
+        $this->load->view('change_oper_pass_form');
+
+}
+public function change_oper_password(){
+	$oper_log=trim($_POST['old_login']);
+	$oper_pass=trim($_POST['old_password']);
+	$new_log=trim($_POST['new_login']);
+    $new_pass1=trim($_POST['new_password1']);
+    $new_pass2=trim($_POST['new_password2']);
+	if($new_pass1!==$new_pass2){
+         $_SESSION['change_error']="Գաղտնաբառերը չեն համընկնում";
+         redirect(base_url("user/change_oper_pass_form"));
+	}
+
+	$res=$this->user_model->check_oper($oper_log,$oper_pass);
+    if($res) {
+        $user_id =$res->user_id;
+        $this->user_model->update_oper($user_id,$new_log,$new_pass1);
+        redirect(base_url("user/index"));
+    }
+    else{
+         $_SESSION['change_error']="Գաղտնաբառերը չեն համընկնում";
+         redirect(base_url("user/change_oper_pass_form"));
+    }
+
 }
 }
