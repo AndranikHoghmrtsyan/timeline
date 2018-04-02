@@ -88,7 +88,7 @@ $date=str_ireplace($eng,$arm,$date);
         <!--   login form  -->
            <div id="login_form" >
                
-               <input type="text" id="password" placeholder="Նշանաբառ:" >
+               <input type="text" id="password" placeholder="Գաղտնաբառ:" >
               <br>
                <br>
                <input type="button" id="login" class="btn btn-success" value="ՄՈՒՏՔ">
@@ -108,7 +108,7 @@ $date=str_ireplace($eng,$arm,$date);
             <textarea  class="form-control" rows="2" id="desc">Եսիմ...</textarea>
           </td>
          </tr> 
-          <tr><td colspan=3><button class="profile btn btn-success">Փոխել նշանաբառը</button></td><td><button class="exit_profile btn btn-danger">Ելք</button></td></tr>
+          <tr><td colspan=3><button class="profile btn btn-success">Փոխել գաղտնաբառը</button></td><td><button class="exit_profile btn btn-danger">Ելք</button></td></tr>
          </table>
          
        </div>
@@ -117,11 +117,11 @@ $date=str_ireplace($eng,$arm,$date);
       <div id="profile_form"  style="" >
          
            <div class="form-group">
-              <label for="profile_pwd">Նոր նշանաբառ:</label>
+              <label for="profile_pwd">Նոր Գաղտնաբառ:</label>
               <input type="password" class="form-control" id="profile_pwd">
            </div>
             <div class="form-group">
-              <label for="profile_pwd1">Նշանաբառի կրկնություն:</label>
+              <label for="profile_pwd1">Գաղտնաբառի կրկնություն:</label>
               <input type="password" class="form-control" id="profile_pwd1">
            </div>
             

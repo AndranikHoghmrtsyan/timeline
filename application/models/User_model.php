@@ -5,13 +5,9 @@ class User_model extends CI_Model {
 
 
    public function check_oper($oper_log,$oper_pass){
-        $this->db->select('id_comp');
-        $res=$this->db->get_where('admin',['oper_pass'=>$oper_pass,'oper_log'=>$oper_log])->row();
+        $this->db->select('id,id_comp');
+        return $this->db->get_where('admin',['oper_pass'=>$oper_pass,'oper_log'=>$oper_log])->row();
         
-        if($res)
-           return $res->id_comp;
-       else
-       	return null;
     }
     public function get_users_by_company($id_comp)
 	{
@@ -92,6 +88,13 @@ class User_model extends CI_Model {
         $this->db->update('users', $data); 
 
 
+	}
+	public function update_oper($user_id,$new_log,$new_pass1){
+
+
+
+
+		
 	}
 	
 }
