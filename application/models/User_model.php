@@ -89,12 +89,10 @@ class User_model extends CI_Model {
 
 
 	}
-	public function update_oper($user_id,$new_log,$new_pass1){
-
-
-
-
-		
+	public function update_oper($id,$new_log,$new_pass){
+           $data = ['oper_pass' => $new_pass,'oper_log'=>$new_log];
+           $this->db->where('id', $id);
+           $this->db->update('admin', $data); 
 	}
 	
 }

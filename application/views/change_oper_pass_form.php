@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </form>
 <?php
 if(isset($_SESSION['change_error'])){
-   echo '<div style="color:red">'.$_SESSION['change_error'].'</div>';
+   echo '<br><h4 style="color:red">'.$_SESSION['change_error'].'</h4>';
    unset($_SESSION['change_error']);
 }
 ?>

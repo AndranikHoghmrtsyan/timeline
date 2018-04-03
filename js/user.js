@@ -36,7 +36,7 @@ $('#login').click(function(){
          success:function(data){
         console.log(data);
            if(data['status']=='error'){
-           $('#message').text('Wrong password');
+           $('#message').text('"Սխալ գաղտնաբառ"');
            }
           else{
           $('#login_form').css('display','none');
@@ -153,11 +153,11 @@ $('#login').click(function(){
         var password=  $('#profile_pwd').val();
         var password1=  $('#profile_pwd1').val(); 
         if(password==""||password1==""){
-            $('#profile_error').html("<h4>All fields are required</h4>");
+            $('#profile_error').html("<h4>Լրացրեք բոլոր դաշտերը</h4>");
             return;
         }   
         if(password!==password1){
-            $('#profile_error').html("<h4>Passwords not matching</h4>");
+            $('#profile_error').html("<h4>Գաղտնաբառերը չեն համընկնում</h4>");
             return;
         } 
         $.ajax({

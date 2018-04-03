@@ -107,6 +107,9 @@ public function update_profile(){
      $id=$_POST['id'];
      $this->user_model->update_profile($id,$password);
 }
+public function logout_form(){
+            $this->load->view('logout_form');
+}
 public function logout(){
      unset($_SESSION['id_comp_oper']);
      setcookie('id_comp_oper', "", time()-3600,'/');
@@ -124,18 +127,18 @@ public function change_oper_password(){
     $new_pass2=trim($_POST['new_password2']);
 	if($new_pass1!==$new_pass2){
          $_SESSION['change_error']="Գաղտնաբառերը չեն համընկնում";
-         redirect(base_url("user/change_oper_pass_form"));
+         redirect(base_url("user/change_oper_passոօռդ_form"));
 	}
 
 	$res=$this->user_model->check_oper($oper_log,$oper_pass);
     if($res) {
-        $user_id =$res->user_id;
-        $this->user_model->update_oper($user_id,$new_log,$new_pass1);
+        $id =$res->id;
+        $this->user_model->update_oper($id,$new_log,$new_pass1);
         redirect(base_url("user/index"));
     }
     else{
-         $_SESSION['change_error']="Գաղտնաբառերը չեն համընկնում";
-         redirect(base_url("user/change_oper_pass_form"));
+         $_SESSION['change_error']="Սխալ մուտքանուն կամ գաղտնաբառ";
+         redirect(base_url("user/change_oper_password_form"));
     }
 
 }
