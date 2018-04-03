@@ -34,14 +34,13 @@ public function __construct(){
         if($res){
         	$id_comp=$res->id_comp;
         	$company_name=$this->user_model->get_company_name_by_id($id_comp);
-        	if($this->input->post('remember'))
-               	setcookie('id_comp_oper', $id_comp, time()+3600*24*365*2,'/');
+            setcookie('id_comp_oper', $id_comp, time()+3600*24*365,'/');
             $_SESSION['id_comp_oper']=$id_comp;
             $company_name=$this->user_model->get_company_name_by_id($id_comp);
             redirect(base_url("$company_name"));
         }
         else{
-        	$_SESSION['login_error']="Սխալ նշանաբառ կամ ծածկագիր";
+        	$_SESSION['login_error']="Սխալ մուտքանուն կամ գաղտնաբառ";
   	          redirect(base_url("user/index"));
 
         }
@@ -111,9 +110,20 @@ public function logout_form(){
             $this->load->view('logout_form');
 }
 public function logout(){
-     unset($_SESSION['id_comp_oper']);
-     setcookie('id_comp_oper', "", time()-3600,'/');
-     redirect(base_url("user/index"));
+
+	
+    if($this->user_model->check_oper_logout(trim($_POST['oper_log']),trim($_POST['oper_pass']))){
+        unset($_SESSION['id_comp_oper']);
+        
+        setcookie('id_comp_oper', "", time()-3600,'/');
+        redirect(base_url("user/index"));
+    }
+    else{
+        $_SESSION['logout_error']="Սխալ մուտքանուն կամ գաղտնաբառ";
+         redirect(base_url("user/logout_form"));
+
+   }
+     
 }
 public function change_oper_password_form(){
         $this->load->view('change_oper_pass_form');

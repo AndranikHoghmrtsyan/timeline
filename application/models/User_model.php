@@ -94,5 +94,9 @@ class User_model extends CI_Model {
            $this->db->where('id', $id);
            $this->db->update('admin', $data); 
 	}
-	
+	public function check_oper_logout($oper_log,$oper_pass){
+		     $this->db->select('id');
+             return  $this->db->get_where('admin', ['oper_log' => $oper_log,'oper_pass'=>$oper_pass])->row()->id;
+
+	}
 }

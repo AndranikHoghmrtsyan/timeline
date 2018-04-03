@@ -19,9 +19,10 @@ class Admin extends CI_Controller {
 		if($this->input->cookie('id_comp')){
 			$id_comp=$this->input->cookie('id_comp');
 			$_SESSION['id_comp']=$id_comp;
-			redirect(base_url('admin/home'));
+			redirect(base_url("admin/home"));
 		}
-		else $this->load->view('admin/login');
+		else 
+            $this->load->view('admin/login');
 	}
 
     public function load_view($page,$data=[]){
@@ -33,29 +34,34 @@ class Admin extends CI_Controller {
 
 	public function check_admin()
 	{
-		$pass=$this->input->post('password');
-        $log=$this->input->post('login');
+		$pass=trim($this->input->post('password'));
+        $log=trim($this->input->post('login'));
 		$id_comp=$this->admin_model->check_admin($log,$pass);
-        if($id_comp!==false){
-            $_SESSION['id_comp']=$id_comp;	
-            if($this->input->post('remember'))
-               	setcookie('id_comp', $id_comp, time()+3600*24*10,'/');
-            redirect(base_url('admin/home'));
+        
+        if($id_comp!=false){
+            
+            $_SESSION['id_comp']=$id_comp;
+         // echo $_SESSION['id_comp'];die;
+           //setcookie('id_comp', $id_comp, time()+3600*24*10,'/');
+  
+            redirect(base_url("admin/home"));
+            die;
      	}
+        else{
+           $_SESSION['error']="Սխալ մուտքանուն կամ գաղտնաբառ";
+           redirect(base_url('admin/index')); 
+        }
+
 	}
 
 	public function home(){
-
-		if(!isset($_SESSION['id_comp']))
-			  redirect(base_url('admin/index'));
-		$id_comp=$_SESSION['id_comp'];	
-		$data['userdata']=$this->admin_model->get_current_userdata($id_comp);
-		$this->load_view('home',$data);
+     echo $_SESSION['id_comp'];die;
+		
     }
 
 	public function logout(){
        
-	   $id_comp=$_SESSION['id_comp'];
+	   
        unset($_SESSION['id_comp']);
        setcookie('id_comp', "", time()-3600,'/');
        redirect(base_url('admin/index'));

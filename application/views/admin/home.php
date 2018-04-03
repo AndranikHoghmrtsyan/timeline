@@ -42,6 +42,9 @@
                               $textcolor='red';
                           elseif($late<0)
                               $textcolor='green';
+                          else{
+                              $textcolor='blue';
+                            }  
                           
       ?>
                           <tr id=<?=$id?>>
