@@ -10,7 +10,9 @@ class Admin_model extends CI_Model {
 	public function check_admin($log,$pass){
         $this->db->select('id_comp');
         $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
-        return $res->id_comp;
+        if($res)
+           return $res->id_comp;
+        return false; 
 	}
   
 	public function get_current_userdata($id_comp){

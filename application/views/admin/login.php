@@ -24,11 +24,18 @@
       <label for="pwd">Ծածկագիր:</label>
       <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="password">
     </div>
-    <div class="checkbox">
-      <label><input type="checkbox" name="remember"> Հիշել</label>
-    </div>
     <button type="submit" class="btn btn-default">Մուտք</button>
   </form>
+  <?php
+if(isset($_SESSION['error'])){
+     echo "<h3>".$_SESSION['error']."</h3>";
+     unset($_SESSION['error']);
+
+}
+
+
+
+  ?>
 </div>
 </div>
 <div class="col-sm-4" >

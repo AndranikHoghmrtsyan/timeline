@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
   
-<title>Timeline</title>
+<title><?php echo $company_name?></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
@@ -33,7 +33,7 @@ $date=str_ireplace($eng,$arm,$date);
    ?>
 <div  class="container-fluid">
  
-    <div class="row" style="background-color:green;"> 
+    <div class="row" style="background-color:#73AB02;"> 
          <div class="col-sm-2" >
              <h1 style="color:white"> <?php echo $company_name?></h1>
          </div>
