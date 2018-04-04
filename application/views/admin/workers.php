@@ -15,20 +15,23 @@
         <th >Ազգանուն</th>
         <th >Սկիզբ</th>
         <th>Ավարտ</th>
+        <th>Գաղտնաբառ</th>
+
         <th></th>
       </tr>
     </thead>
     <tbody>
     <?php
-   if(empty($workers))die;
+   
    // echo '<pre>';
-  
+  if(!empty($workers))
     foreach($workers as $row){
     	$id=$row['id'];
     	$name=$row['name'];
     	$surname=$row['surname'];
     	$begin_time=$row['begin_time'];
     	$end_time=$row['end_time'];
+      $password=$row['password'];
        	$src=base_url($row['image']);
 ?>      
      <tr id=<?=$id?>>
@@ -70,7 +73,7 @@
           </select>
         </td>
 
-      
+      <td class="pass" contenteditable><?=$password?></td>
       
        <td><button class="update_worker btn btn-success">Խմբագրել</button> </td>
         <td><button class="delete_worker btn btn-danger">Ջնջել</button> </td>
@@ -116,11 +119,14 @@
                <label for="name">Անուն:</label>
                <input type="text" class="form-control" id="name">
             </div>
-           <div class="form-group">
+            <div class="form-group">
                <label for="surname">Ազգանուն:</label>
                <input type="text" class="form-control" id="surname">
             </div> 
-
+            <div class="form-group">
+               <label for="surname">Գաղտնաբառ:</label>
+               <input type="text" class="form-control" id="psw" value="123">
+            </div>
          
            <button  class="btn btn-success" id="send_reg_form">Գրանցել</button><button  class="btn btn-danger" id="close_reg_form">Չեղարկել</button>
            <br><br>

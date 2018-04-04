@@ -10,6 +10,7 @@ class Admin_model extends CI_Model {
 	public function check_admin($log,$pass){
         $this->db->select('id_comp');
         $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
+
         if($res)
            return $res->id_comp;
         return false; 
@@ -74,11 +75,12 @@ class Admin_model extends CI_Model {
        //return $this->db->last_query();
       
 }
-public function add_user($name,$surname){
+public function add_user($name,$surname,$password){
         $data = array(
-           'name' => $name ,
+           'name'    => $name ,
            'surname' => $surname ,
-           'id_comp'=>$_SESSION['id_comp']
+           'password'=>$password,
+           'id_comp' =>$_SESSION['id_comp']
         );
         $this->db->insert('users', $data); 
 
@@ -89,13 +91,14 @@ public function add_user($name,$surname){
      $this->db->where('user_id', $id);
      $this->db->delete('timeline'); 
   }
-  public function update_user($id,$name,$surname,$src,$begin_time,$end_time){
+  public function update_user($id,$name,$surname,$src,$begin_time,$end_time,$pass){
       $data = array(
          'name' => $name,
          'surname' => $surname,
          'image' => $src,
          'begin_time'=>$begin_time,
          'end_time'=>$end_time,
+         'password'=>$pass
        );
       $this->db->where('id', $id);
       $this->db->update('users', $data); 

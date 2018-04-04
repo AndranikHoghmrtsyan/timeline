@@ -9,7 +9,8 @@ $('#add_person').click(function(){
 $('#send_reg_form').click(function(){
      var name=$('#name').val();
      var surname=$('#surname').val();
-     if(name==""||surname==""){
+     var password=$('#psw').val();
+     if(name==""||surname==""||password==""){
          $('#error').html("All fields are required");
          return;
       }   
@@ -17,7 +18,7 @@ $('#send_reg_form').click(function(){
       $.ajax({
          url:base_url+'admin/add_user',
          type:'post',
-         data:{name:name,surname:surname},
+         data:{name:name,surname:surname,password:password},
          success:function(data){
              $('#registr_form').css('display','none');
              location.reload();
@@ -120,6 +121,7 @@ $('.update_worker').click(function(){
     var surname=parentTr.find('.surname').text();
     var begin_time=parentTr.find('.begin_time').val();
     var end_time=parentTr.find('.end_time').val();
+    var pass=parentTr.find('.pass').text();
     $.ajax({
            url:base_url+'admin/update_user',
            type:'post',
@@ -128,7 +130,8 @@ $('.update_worker').click(function(){
             name:name,
             surname:surname,
             begin_time:begin_time,
-            end_time:end_time
+            end_time:end_time,
+            pass:pass
           },
            success:function(data){
             
