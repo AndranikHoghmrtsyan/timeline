@@ -5,7 +5,6 @@ class Admin extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
-        $_SESSION['id_comp']=2;
         if(!isset($_SESSION['month']))
               $_SESSION['month']=date('n');
         if(!isset($_SESSION['year']))
@@ -39,13 +38,10 @@ class Admin extends CI_Controller {
 		$id_comp=$this->admin_model->check_admin($log,$pass);
         
         if($id_comp!=false){
-            
-            $_SESSION['id_comp']=$id_comp;
-         // echo $_SESSION['id_comp'];die;
-           //setcookie('id_comp', $id_comp, time()+3600*24*10,'/');
-  
-            redirect(base_url("admin/home"));
-            die;
+             $_SESSION['id_comp']=$id_comp;
+             setcookie('id_comp', $id_comp, time()+3600*24*10,'/');
+             redirect(base_url("admin/home"));
+           
      	}
         else{
            $_SESSION['error']="Սխալ մուտքանուն կամ գաղտնաբառ";
@@ -55,8 +51,11 @@ class Admin extends CI_Controller {
 	}
 
 	public function home(){
-     echo $_SESSION['id_comp'];die;
-		
+    if(!isset($_SESSION['id_comp']))
+              redirect(base_url('admin/index'));
+        $id_comp=$_SESSION['id_comp'];  
+        $data['userdata']=$this->admin_model->get_current_userdata($id_comp);
+        $this->load_view('home',$data);
     }
 
 	public function logout(){
@@ -88,7 +87,8 @@ class Admin extends CI_Controller {
 	public function add_user(){
         $name=$_POST['name'];
         $surname=$_POST['surname'];
-        $this->admin_model->add_user($name,$surname);
+        $password=$_POST['password'];
+        $this->admin_model->add_user($name,$surname,$password);
     }  
     public function delete_user(){
         $id=$this->input->post('id');
@@ -108,7 +108,8 @@ class Admin extends CI_Controller {
         $end_time=$this->input->post('end_time');
         $src=explode('/',$this->input->post('src'));
         $src='images/'.end($src);
-        $this->admin_model->update_user($id,$name,$surname,$src,$begin_time,$end_time);
+        $pass=$this->input->post('pass');
+        $this->admin_model->update_user($id,$name,$surname,$src,$begin_time,$end_time,$pass);
     }
 
     public function upload(){

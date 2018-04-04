@@ -17,11 +17,11 @@
   <h2>Մուտք</h2>
   <form action="<?php echo base_url('admin/check_admin')?>" method="post">
     <div class="form-group">
-      <label for="login">Նշանաբառ:</label>
+      <label for="login">Մուտքանուն:</label>
       <input type="password" class="form-control" id="login" placeholder="նշանաբառ..." name="login">
     </div>
     <div class="form-group">
-      <label for="pwd">Ծածկագիր:</label>
+      <label for="pwd">Գաղտնաբառ:</label>
       <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="password">
     </div>
     <button type="submit" class="btn btn-default">Մուտք</button>
