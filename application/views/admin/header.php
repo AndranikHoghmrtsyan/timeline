@@ -17,9 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" id="nav-header">
     <div class="navbar-header">
-      <a class="navbar-brand" ><?php echo $company_name ?></a>
+      <a class="navbar-brand" style="color:white"><?php echo $company_name ?></a>
     </div>
     <ul class="nav navbar-nav">
       <li><a href="<?php echo base_url('admin/workers')?>">Աշխատողներ</a></li>
