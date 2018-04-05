@@ -6,6 +6,9 @@ class Super extends CI_Controller {
     public function __construct(){
          parent::__construct();
          $this->load->model('super_model');
+         $this->load->model('user_model');
+         if(!isset($_SESSION['id_comp_super']))
+            $_SESSION['id_comp_super']=2;
     }
     public function index()
 	{
@@ -31,10 +34,18 @@ class Super extends CI_Controller {
         }
     }
     public function home(){
-    	$this->load->model('user_model');
+        $id_comp=$_SESSION['id_comp_super'];
+    	$data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
     	$data['companys']=$this->user_model->get_companys();
     	$this->load->view('super/header',$data);
         //$this->load->view('super/home',$data);
+    }
+     public function company($id_comp){
+       $id_comp=$_SESSION['id_comp_super'];
+       $data['company_name']=$this->user_model->get_company_name_by_id($id_comp); 
+       $data['companys']=$this->user_model->get_companys();
+        $this->load->view('super/header',$data);
+
     }
 }
 
