@@ -34,45 +34,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Կազմակերպություն<span class="caret"></span></a>
-                <ul class="dropdown-menu">
+                  <ul class="dropdown-menu">
                   <?php
-                  foreach($companys as $firm){
+                  foreach($companys_data as $firm){
         //  $active='';
         // if($firm['id']==$_SESSION['id_comp_super'])
         //     $active='class="active"';
-      $url='super/company/'.$firm['id'];
+      $firmname=$firm['name'];
+      $url='super/company/'.$firmname;
       
-        echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firm['name'].'</a></li>';
+        echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
       }
       ?>
               
-                </ul>
+                 </ul>
               </li>
-               <li> <a href="#">
-             Նոր
-           </a>
-              </li> 
-              <li> <a href="#">
-             Ընդհանուր
-           </a>
-              </li>
-                <li ><a href="#">
-               Անհատական </a>
-              </li>
-              
-                              <li ><a href="#"><input type="button" id="login" class="btn btn-info" value="Փոխել գաղտնաբառը">
-                </a>
-              </li>
-              
-                              <li ><a href="#"><input type="button" id="login" class="btn btn-danger" value="Ելք">
-             </a>
-              </li>
-              
-             
-            
-            </ul>
-            
-
+              <li> <a href="<?=base_url('super/firms')?>">Նոր</a></li> 
+              <li> <a href="<?=base_url('super/common')?>">Ընդհանուր</a></li>
+              <li ><a href="#">Անհատական </a></li>
+              <li ><a href="#"><input type="button" id="login" class="btn btn-info" value="Փոխել գաղտնաբառը"></a></li>
+              <li ><a href="#"><input type="button" id="login" class="btn btn-danger" value="Ելք"></a></li>
+           </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
