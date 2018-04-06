@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </li> -->
               <li> <a href="<?=base_url('admin/firms')?>">Կազմակերպություններ</a></li> 
               <li> <a href="<?=base_url('admin/home')?>">Ընդհանուր</a></li>
-              <li ><a href="#">Անհատական </a></li>
+              <li ><a href="<?=base_url('admin/individual')?>">Անհատական </a></li>
               <li ><a href="#"><input type="button" id="login" class="btn btn-info" value="Փոխել գաղտնաբառը"></a></li>
               <li ><a href="<?=base_url('admin/logout')?>""><input type="button" id="login" class="btn btn-danger" value="Ելք"></a></li>
            </ul>

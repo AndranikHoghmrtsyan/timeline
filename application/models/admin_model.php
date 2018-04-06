@@ -218,10 +218,11 @@ public function get_available_years($id_comp){
    $sql="SELECT distinct YEAR(`day`) AS year FROM `timeline`,users 
         WHERE  `user_id`=`users`.id AND id_comp=$id_comp  ORDER BY year desc";
      return $this->db->query($sql)->result_array();
-
-
-
-
 } 
+/////////////////
+public function get_companys(){
+     return $this->db->get('company')->result_array();
+
+}
 
 }

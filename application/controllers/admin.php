@@ -65,7 +65,7 @@ class Admin extends CI_Controller {
             $this->load_view('home',$data);
         }
         else{
-
+            $data['companys']=$this->admin_model->get_companys();
             $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
             $data['month_data']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
             $data['available_months']=$this->admin_model->get_available_months($id_comp,$_SESSION['year']);
@@ -83,10 +83,14 @@ class Admin extends CI_Controller {
 	}
     public function firms(){
        $data['companys_data']=$this->admin_model->get_companys_data();
-       print_r($data['companys_data']);die;
        $this->load_view('firms',$data);
-
+     }
+   public function company($id_comp){
+        $_SESSION['id_comp']=$id_comp;
+        redirect(base_url('admin/home'));
     }
+
+    
 	public function edit_current_timeline(){
 		$this->admin_model->edit_current_timeline($_POST);
 		$begin=strtotime($_POST['begin']);
@@ -215,6 +219,7 @@ class Admin extends CI_Controller {
     public function individual(){
     	
         $id_comp=$_SESSION['id_comp'];
+        $data['companys']=$this->admin_model->get_companys();
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['available_months']=$this->admin_model->get_available_months($id_comp,$_SESSION['year']);
         $data['available_years']=$this->admin_model->get_available_years($id_comp); 
@@ -227,5 +232,13 @@ class Admin extends CI_Controller {
         echo json_encode($res);
       
     } 
+    public function change_comp_ind($id_comp){
+          $_SESSION['id_comp']=$id_comp;
+          redirect(base_url('admin/individual'));
+
+
+
+
+    }
     
 }

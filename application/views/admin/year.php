@@ -5,23 +5,26 @@
         <div class="col-sm-4">
          <div  class="container"> 
             <div class="row"> 
-            <div class="col-sm-4">  
+            <div class="col-sm-4"> 
+          <?php
+          if($_SESSION['role']=='super') {
+            ?>
         	<div class="dropdown" style="float:left">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                    <?php 
                       // echo $all_month[$month];
-                   echo $_SESSION['year'];
+                   echo $company_name;
                  
                    ?>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <?php 
-                               foreach($companys_data as $firm){
+                               foreach($companys as $firm){
         //  $active='';
         // if($firm['id']==$_SESSION['id_comp_super'])
         //     $active='class="active"';
       $firmname=$firm['name'];
-      $url='super/company/'.$firmname;
+      $url='admin/company/'.$firm['id'];
       
         echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
       }
@@ -29,7 +32,10 @@
     
                 </ul>
             </div>
+           <?php
+        }?>  
             </div>
+         
             <div class="col-sm-8"> 
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
