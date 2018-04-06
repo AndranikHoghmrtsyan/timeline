@@ -8,14 +8,13 @@ class Admin_model extends CI_Model {
 
   }
 	public function check_admin($log,$pass){
-        $this->db->select('id_comp');
-        $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
-
-        if($res)
-           return $res->id_comp;
-        return false; 
+        $this->db->select('id_comp,role');
+        return $this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
 	}
-  
+   public function get_companys_data(){
+    $query="SELECT admin.*,name from admin join company on company.id=admin.id_comp";
+      return $this->db->query($query)->result_array();
+  }
 	public function get_current_userdata($id_comp){
       $count_month_days=date('t');
 

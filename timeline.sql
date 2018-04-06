@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 05 2018 г., 08:36
+-- Время создания: Апр 06 2018 г., 09:27
 -- Версия сервера: 10.1.9-MariaDB
 -- Версия PHP: 5.5.30
 
@@ -32,17 +32,20 @@ CREATE TABLE `admin` (
   `login` varchar(15) NOT NULL,
   `password` varchar(20) NOT NULL,
   `oper_log` varchar(15) NOT NULL,
-  `oper_pass` varchar(15) NOT NULL
+  `oper_pass` varchar(15) NOT NULL,
+  `role` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `admin`
 --
 
-INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `oper_log`, `oper_pass`) VALUES
-(1, 1, 'colibrilab', '111', 'sargis', '111'),
-(2, 2, 'colibri', '222', 'ani', '222'),
-(3, 3, 'arssistems', '333', 'hermine', '333');
+INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `oper_log`, `oper_pass`, `role`) VALUES
+(1, 1, 'sargis', '111', 'sargis', '111', 'admin'),
+(2, 2, 'ani', '222', 'ani', '222', 'admin'),
+(3, 3, 'hermine', '333', 'hermine', '333', 'admin'),
+(4, 4, 'lusine', '444', 'lusine', '444', 'admin'),
+(5, 2, 'super', '000', '', '', 'super');
 
 -- --------------------------------------------------------
 
@@ -261,7 +264,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `company`
 --
