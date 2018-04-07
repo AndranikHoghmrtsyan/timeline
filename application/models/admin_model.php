@@ -160,8 +160,10 @@ public function add_user($name,$surname,$password){
            `description`,
            `late`,
            DAY(`day`) as day,
-           `user_id`
-          FROM `timeline` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
+           `user_id`,
+           name,
+           surname
+          FROM `timeline` JOIN `users` ON `users`.`id`=`user_id` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
          ";
         
       return $this->db->query($sql)->result_array();

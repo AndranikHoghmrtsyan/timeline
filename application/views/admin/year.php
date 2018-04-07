@@ -24,7 +24,7 @@
         // if($firm['id']==$_SESSION['id_comp_super'])
         //     $active='class="active"';
       $firmname=$firm['name'];
-      $url='admin/company/'.$firm['id'];
+      $url='admin/change_company/'.$firm['id'].'/'.'home';
       
         echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
       }

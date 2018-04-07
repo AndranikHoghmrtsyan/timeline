@@ -269,6 +269,7 @@ function show_user_month_data(data){
       }
       html+='</table>';
       $("#worker_month_data").html(html);
+      $("#username").html(data[0]['name']+" "+data[0]['surname'])
 }
 $('.individual_workers').click(function(){
     user_id=$(this).attr('id');

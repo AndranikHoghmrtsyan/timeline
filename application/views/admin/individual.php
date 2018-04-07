@@ -24,7 +24,7 @@
         // if($firm['id']==$_SESSION['id_comp_super'])
         //     $active='class="active"';
       $firmname=$firm['name'];
-      $url='admin/change_comp_ind/'.$firm['id'];
+      $url='admin/change_company/'.$firm['id'].'/'.'individual';
       
         echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
       }
@@ -117,7 +117,7 @@
                ?>
                </ul>
             </div>
-     
+     <h4 id="username" style="color:blue"></h4>
         <div id="worker_month_data"></div>
       	    
         </div>     
