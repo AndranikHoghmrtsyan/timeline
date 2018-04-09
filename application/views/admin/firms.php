@@ -1,12 +1,14 @@
 
-<div id="content" class="container-fluid">
-    <div class="row">
-       <!-- first column -->
-       
-       <div class="col-sm-4" >
-        
-       <div><button id="add_person" class="btn btn-primary btn-lg">Ավելացնել</button></div>
-      
+<div id="content" class="container">
+  
+               
+      <button type="button" id="new_firm_btn" class="btn btn-info" data-toggle="collapse" data-target="#new_firm">Ավելացնել</button>
+      <br/>
+      <br/>
+      <div id="new_firm" class="collapse">
+          <input type="text" id="firmName">
+          <button class="btn btn-success" id="addFirm">Գրանցել</button>
+      </div>
       <table class="table table-bordered firms_list">
     <thead>
       <tr>
@@ -22,8 +24,7 @@
     <tbody>
     <?php
    
-   // echo '<pre>';
- if(!empty($companys_data))
+    if(!empty($companys_data))
     foreach($companys_data as $row){
     	$id=$row['id'];
     	$name=$row['name'];
@@ -72,11 +73,11 @@
 
         <!-- end modal delete  -->
        <!-- end of first column -->
-       </div>
-<div class="col-sm-3" ></div>
+     <!--   </div> -->
+<!-- <div class="col-sm-3" ></div> -->
        <!-- second column -->
-      <div class="col-sm-5" >
-       <div id="registr_form">
+    <!--   <div class="col-sm-5" > -->
+      <!--  <div id="registr_form">
          
             <div class="form-group">
                <label for="name">Կազմակերպության անունը:</label>
@@ -95,13 +96,13 @@
            <br><br>
         <div id="error" style="color:red"></div>
       </div>
-      </div>
+      </div> -->
       <!-- thired column -->
     
      
       <!--end of thired column -->
       
 <!-- end of row       -->
-</div>  
+<!-- </div>  --> 
 <!-- end of content    -->
 </div>

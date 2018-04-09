@@ -233,5 +233,11 @@ class Admin extends CI_Controller {
 
 
     }
+    public function add_firm(){
+
+echo "hhhh";
+
+
+    }
     
 }
