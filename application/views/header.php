@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    date_default_timezone_set('Asia/Yerevan');
    if(!isset($_SESSION['id_comp']))
         $_SESSION['id_comp']=1;
-    foreach($companys as $firm){
+    foreach($companys_data as $firm){
          $active='';
         if($firm['id']==$_SESSION['id_comp'])
             $active='class="active"';

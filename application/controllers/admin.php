@@ -13,33 +13,39 @@ class Admin extends CI_Controller {
         $this->load->model('user_model');
     }
 
+///////////////////
 	public function index()
 	{
-		if($this->input->cookie('id_comp')){
-			$id_comp=$this->input->cookie('id_comp');
-			$_SESSION['id_comp']=$id_comp;
+		if($this->input->cookie('role')){
+            $_SESSION['role']=$this->input->cookie('role');
+			$_SESSION['id_comp']=$this->input->cookie('id_comp');
 			redirect(base_url("admin/home"));
 		}
 		else 
             $this->load->view('admin/login');
 	}
-
+///////////////////
     public function load_view($page,$data=[]){
          $id_comp=$_SESSION['id_comp'];  
-         $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);   
-         $this->load->view('admin/header',$data); 
+         $data['company_name']=$this->user_model->get_company_name_by_id($id_comp);
+         if($_SESSION['role']=='admin')   
+            $this->load->view('admin/header',$data);
+         elseif($_SESSION['role']=='super')
+             $this->load->view('admin/super_header',$data);
          $this->load->view("admin/$page",$data);
     }
-
+/////////////////
 	public function check_admin()
 	{
 		$pass=trim($this->input->post('password'));
         $log=trim($this->input->post('login'));
-		$id_comp=$this->admin_model->check_admin($log,$pass);
+		$res=$this->admin_model->check_admin($log,$pass);
         
-        if($id_comp!=false){
-             $_SESSION['id_comp']=$id_comp;
-             setcookie('id_comp', $id_comp, time()+3600*24*10,'/');
+        if($res){
+             $_SESSION['id_comp']=$res->id_comp;
+             $_SESSION['role']=$res->role;
+             setcookie('id_comp', $res->id_comp, time()+3600*24*10,'/');
+             setcookie('role',$res->role, time()+3600*24*10,'/');
              redirect(base_url("admin/home"));
            
      	}
@@ -49,23 +55,37 @@ class Admin extends CI_Controller {
         }
 
 	}
-
+///////////
 	public function home(){
-    if(!isset($_SESSION['id_comp']))
-              redirect(base_url('admin/index'));
+        if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $id_comp=$_SESSION['id_comp'];  
-        $data['userdata']=$this->admin_model->get_current_userdata($id_comp);
-        $this->load_view('home',$data);
+        if($_SESSION['role']=='admin'){  
+            $data['userdata']=$this->admin_model->get_current_userdata($id_comp);
+            $this->load_view('home',$data);
+        }
+        else{
+            $data['companys']=$this->admin_model->get_companys(); 
+            $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
+            $data['month_data']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
+            $data['available_months']=$this->admin_model->get_available_months($id_comp,$_SESSION['year']);
+            $data['available_years']=$this->admin_model->get_available_years($id_comp); 
+            $this->load_view('year',$data); 
+        }
     }
-
+///////////
 	public function logout(){
-       
-	   
        unset($_SESSION['id_comp']);
+       unset($_SESSION['role']);
        setcookie('id_comp', "", time()-3600,'/');
+       setcookie('role', "", time()-3600,'/');
        redirect(base_url('admin/index'));
 	}
+    public function firms(){
+       $data['companys_data']=$this->admin_model->get_companys_data();
+       $this->load_view('firms',$data);
 
+    }
 	public function edit_current_timeline(){
 		$this->admin_model->edit_current_timeline($_POST);
 		$begin=strtotime($_POST['begin']);
@@ -194,6 +214,7 @@ class Admin extends CI_Controller {
     public function individual(){
     	
         $id_comp=$_SESSION['id_comp'];
+        $data['companys']=$this->admin_model->get_companys(); 
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['available_months']=$this->admin_model->get_available_months($id_comp,$_SESSION['year']);
         $data['available_years']=$this->admin_model->get_available_years($id_comp); 
@@ -206,5 +227,11 @@ class Admin extends CI_Controller {
         echo json_encode($res);
       
     } 
+    public function change_company($id_comp,$page){
+        $_SESSION['id_comp']=$id_comp;
+         redirect(base_url("admin/$page")); 
+
+
+    }
     
 }

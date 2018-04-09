@@ -12,5 +12,9 @@ class Super_model extends CI_Model {
            return $res->id_comp;
         return false; 
 	}
+  public function get_companys_data(){
+    $query="SELECT admin.*,name from admin join company on company.id=admin.id_comp";
+      return $this->db->query($query)->result_array();
+  }
 }
   

@@ -8,14 +8,13 @@ class Admin_model extends CI_Model {
 
   }
 	public function check_admin($log,$pass){
-        $this->db->select('id_comp');
-        $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
-
-        if($res)
-           return $res->id_comp;
-        return false; 
+        $this->db->select('id_comp,role');
+        return $this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
 	}
-  
+   public function get_companys_data(){
+    $query="SELECT admin.*,name from admin join company on company.id=admin.id_comp";
+      return $this->db->query($query)->result_array();
+  }
 	public function get_current_userdata($id_comp){
       $count_month_days=date('t');
 
@@ -161,8 +160,10 @@ public function add_user($name,$surname,$password){
            `description`,
            `late`,
            DAY(`day`) as day,
-           `user_id`
-          FROM `timeline` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
+           `user_id`,
+           name,
+           surname
+          FROM `timeline` JOIN `users` ON `users`.`id`=`user_id` WHERE MONTH(`day`)='$month' and YEAR(`day`)='$year' and user_id='$id' order by DAY(day) 
          ";
         
       return $this->db->query($sql)->result_array();
@@ -219,10 +220,11 @@ public function get_available_years($id_comp){
    $sql="SELECT distinct YEAR(`day`) AS year FROM `timeline`,users 
         WHERE  `user_id`=`users`.id AND id_comp=$id_comp  ORDER BY year desc";
      return $this->db->query($sql)->result_array();
-
-
-
-
 } 
+/////////////////
+public function get_companys(){
+     return $this->db->get('company')->result_array();
+
+}
 
 }

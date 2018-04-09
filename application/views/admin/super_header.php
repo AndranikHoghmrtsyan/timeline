@@ -12,8 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('js/bootstrap.js')?>"></script>	
 
 <script>var base_url="<?php echo base_url();?>"</script>
-<script src="<?php echo base_url('js/super.js')?>"></script>	
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/super_style.css')?>">
+<script src="<?php echo base_url('js/admin.js')?>"></script>	
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/admin.css')?>">
 </head>
 <body>
   <div class="container-fluid">
@@ -32,10 +32,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="dropdown">
+              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Կազմակերպություն<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                  <?php
+                 
                   foreach($companys_data as $firm){
         //  $active='';
         // if($firm['id']==$_SESSION['id_comp_super'])
@@ -45,15 +45,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       
         echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
       }
-      ?>
+     
               
                  </ul>
-              </li>
-              <li> <a href="<?=base_url('super/firms')?>">Նոր</a></li> 
-              <li> <a href="<?=base_url('super/common')?>">Ընդհանուր</a></li>
-              <li ><a href="#">Անհատական </a></li>
+              </li> -->
+              <li> <a href="<?=base_url('admin/firms')?>">Կազմակերպություններ</a></li> 
+              <li> <a href="<?=base_url('admin/home')?>">Ընդհանուր</a></li>
+              <li ><a href="<?=base_url('admin/individual')?>">Անհատական </a></li>
               <li ><a href="#"><input type="button" id="login" class="btn btn-info" value="Փոխել գաղտնաբառը"></a></li>
-              <li ><a href="#"><input type="button" id="login" class="btn btn-danger" value="Ելք"></a></li>
+              <li ><a href="<?=base_url('admin/logout')?>""><input type="button" id="login" class="btn btn-danger" value="Ելք"></a></li>
            </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

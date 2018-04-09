@@ -3,7 +3,41 @@
 <div  class="container">
     <div class="row"> 
         <div class="col-sm-4">
-        	<div class="dropdown">
+         <div  class="container"> 
+            <div class="row"> 
+            <div class="col-sm-4"> 
+          <?php
+          if($_SESSION['role']=='super') {
+            ?>
+        	<div class="dropdown" style="float:left">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                   <?php 
+                      // echo $all_month[$month];
+                   echo $company_name;
+                 
+                   ?>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php 
+                               foreach($companys as $firm){
+        //  $active='';
+        // if($firm['id']==$_SESSION['id_comp_super'])
+        //     $active='class="active"';
+      $firmname=$firm['name'];
+      $url='admin/change_company/'.$firm['id'].'/'.'home';
+      
+        echo '<li id='.$firm['id'].'><a href="'.base_url($url).'">'.$firmname.'</a></li>';
+      }
+                    ?>
+    
+                </ul>
+            </div>
+           <?php
+        }?>  
+            </div>
+         
+            <div class="col-sm-8"> 
+            <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                    <?php 
                       // echo $all_month[$month];
@@ -25,7 +59,10 @@
                     ?>
     
                 </ul>
+              </div>
             </div>
+          </div>
+          </div>
             <table class="table" >
             	<tr><th></th><th>Անուն</th><th>Ազգանուն</th><th>ՈՒշացում</th><th>Ընդամենը</th></tr>
 

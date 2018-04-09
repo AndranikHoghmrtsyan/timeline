@@ -1,0 +1,35 @@
+@media (min-width: 768px) {
+ .dropdown .dropdown-menu{
+    display: block; 
+  opacity:0;
+-webkit-transition: all 500ms ease-in;
+-moz-transition: all 500ms ease-in;
+-ms-transition: all 500ms ease-in;
+-o-transition: all 500ms ease-in;
+transition: all 500ms ease-in;
+}
+  .dropdown-menu {
+    display: block;
+    opacity: 1;
+    top: 60px;
+  background-color:#5BC0DE;
+} 
+  
+ .vrau{
+    display:block;
+    opacity:1;
+  }
+  
+}
+
+#nav-header{
+background-color:#5BC0DE;
+color:black;
+
+
+}
+.navbar-default .navbar-nav>li>a{
+color:black;
+
+    
+}
