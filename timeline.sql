@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 07 2018 г., 08:02
--- Версия сервера: 10.1.9-MariaDB
--- Версия PHP: 5.5.30
+-- Время создания: Апр 09 2018 г., 15:24
+-- Версия сервера: 5.6.24
+-- Версия PHP: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- База данных: `timeline`
@@ -26,26 +26,25 @@ SET time_zone = "+00:00";
 -- Структура таблицы `admin`
 --
 
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(3) NOT NULL,
   `id_comp` int(2) NOT NULL,
   `login` varchar(15) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `oper_log` varchar(15) NOT NULL,
-  `oper_pass` varchar(15) NOT NULL,
   `role` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `admin`
 --
 
-INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `oper_log`, `oper_pass`, `role`) VALUES
-(1, 1, 'sargis', '111', 'sargis', '111', 'admin'),
-(2, 2, 'ani', '222', 'ani', '222', 'admin'),
-(3, 3, 'hermine', '333', 'hermine', '333', 'admin'),
-(4, 4, 'lusine', '444', 'lusine', '444', 'admin'),
-(5, 2, 'super', '000', '', '', 'super');
+INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `role`) VALUES
+(1, 1, 'sargis', '111', 'admin'),
+(2, 2, 'ani', '222', 'admin'),
+(3, 3, 'hermine', '333', 'admin'),
+(4, 4, 'lusine', '444', 'admin'),
+(5, 2, 'super', '000', 'super'),
+(6, 5, '', '', 'admin');
 
 -- --------------------------------------------------------
 
@@ -53,10 +52,10 @@ INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `oper_log`, `oper_pas
 -- Структура таблицы `company`
 --
 
-CREATE TABLE `company` (
+CREATE TABLE IF NOT EXISTS `company` (
   `id` int(2) NOT NULL,
   `name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `company`
@@ -65,7 +64,9 @@ CREATE TABLE `company` (
 INSERT INTO `company` (`id`, `name`) VALUES
 (1, 'ColibriLab'),
 (2, 'Colibri'),
-(3, 'ARS Systems');
+(3, 'ARS Systems'),
+(4, 'Arnology'),
+(5, 'ddd');
 
 -- --------------------------------------------------------
 
@@ -73,7 +74,7 @@ INSERT INTO `company` (`id`, `name`) VALUES
 -- Структура таблицы `timeline`
 --
 
-CREATE TABLE `timeline` (
+CREATE TABLE IF NOT EXISTS `timeline` (
   `id` int(5) NOT NULL,
   `user_id` int(4) NOT NULL,
   `day` date NOT NULL,
@@ -85,7 +86,7 @@ CREATE TABLE `timeline` (
   `end_time1` time NOT NULL,
   `description` varchar(200) NOT NULL DEFAULT 'Բացատրություն...',
   `late` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `timeline`
@@ -198,7 +199,19 @@ INSERT INTO `timeline` (`id`, `user_id`, `day`, `begin`, `lunch_begin`, `lunch_e
 (157, 35, '2018-04-07', '09:02:55', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', -57),
 (158, 36, '2018-04-07', '09:02:59', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', -57),
 (159, 37, '2018-04-07', '09:03:03', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', -57),
-(160, 38, '2018-04-07', '09:03:11', NULL, NULL, NULL, '00:00:09', '19:00:00', 'Բացատրություն...', 543);
+(160, 38, '2018-04-07', '09:03:11', NULL, NULL, NULL, '00:00:09', '19:00:00', 'Բացատրություն...', 543),
+(161, 27, '2018-04-09', '16:04:20', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 364),
+(162, 28, '2018-04-09', '16:04:24', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 364),
+(163, 29, '2018-04-09', '16:04:29', NULL, NULL, NULL, '23:00:00', '19:00:00', 'Բացատրություն...', -416),
+(164, 30, '2018-04-09', '16:04:33', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 365),
+(165, 31, '2018-04-09', '16:04:36', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 365),
+(166, 32, '2018-04-09', '16:04:42', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 365),
+(167, 33, '2018-04-09', '16:06:50', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 367),
+(168, 34, '2018-04-09', '16:06:54', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 367),
+(169, 35, '2018-04-09', '16:06:59', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 367),
+(170, 36, '2018-04-09', '16:07:04', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 367),
+(171, 37, '2018-04-09', '16:07:08', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 367),
+(172, 38, '2018-04-09', '16:07:12', NULL, NULL, NULL, '00:00:09', '19:00:00', 'Բացատրություն...', 967);
 
 -- --------------------------------------------------------
 
@@ -206,7 +219,7 @@ INSERT INTO `timeline` (`id`, `user_id`, `day`, `begin`, `lunch_begin`, `lunch_e
 -- Структура таблицы `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(4) NOT NULL,
   `name` varchar(15) NOT NULL,
   `surname` varchar(20) NOT NULL,
@@ -215,7 +228,7 @@ CREATE TABLE `users` (
   `begin_time` varchar(8) NOT NULL DEFAULT '10:00',
   `end_time` varchar(8) NOT NULL DEFAULT '19:00',
   `image` varchar(40) NOT NULL DEFAULT 'images/default.jpg'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
@@ -246,8 +259,7 @@ INSERT INTO `users` (`id`, `name`, `surname`, `password`, `id_comp`, `begin_time
 -- Индексы таблицы `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `password` (`password`);
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `password` (`password`);
 
 --
 -- Индексы таблицы `company`
@@ -265,8 +277,7 @@ ALTER TABLE `timeline`
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_user` (`id_comp`);
+  ADD PRIMARY KEY (`id`), ADD KEY `FK_user` (`id_comp`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -276,22 +287,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=173;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -300,7 +311,7 @@ ALTER TABLE `users`
 -- Ограничения внешнего ключа таблицы `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `FK_user` FOREIGN KEY (`id_comp`) REFERENCES `company` (`id`);
+ADD CONSTRAINT `FK_user` FOREIGN KEY (`id_comp`) REFERENCES `company` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

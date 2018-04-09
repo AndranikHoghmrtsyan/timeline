@@ -368,24 +368,19 @@ $(this).css('cursor','pointer');
       })
 
 
- $('#addFirm').click(function(){
-    var name=$('#firmName').val();
-  
-      
-    $.ajax({
-        url:base_url+'admin/add_firm',
-        type:'post',
-        data:{
-           name:name
-        },
-        success:function(data){
-        alert(data)
-            
-        }
-
-
-    })
+  $('#addFirm').click(function(){
+       var name=$('#firmName').text();
+       alert(name)
+       $.ajax({
+          url:base_url+'admin/add_firm',
+          type:'post',
+          data:{name:name},
+          success:function(data){
+            alert(data)
+              //location.reload();
+          }
       })
+  })
 
 
 });

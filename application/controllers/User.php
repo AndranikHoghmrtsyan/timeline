@@ -27,13 +27,11 @@ public function __construct(){
 			$this->load->view('login');
 	} 
 	public function check_oper(){
-        $oper_pass=trim($this->input->post('oper_pass'));
-        $oper_log=trim($this->input->post('oper_log'));
-        $res=$this->user_model->check_oper($oper_log,$oper_pass);
-       
-        if($res){
-        	$id_comp=$res->id_comp;
-        	$company_name=$this->user_model->get_company_name_by_id($id_comp);
+        $pass=trim($this->input->post('pass'));
+        $log=trim($this->input->post('log'));
+        $id_comp=$this->user_model->check_oper($log,$pass);
+        if($id_comp){
+         	$company_name=$this->user_model->get_company_name_by_id($id_comp);
             setcookie('id_comp_oper', $id_comp, time()+3600*24*365,'/');
             $_SESSION['id_comp_oper']=$id_comp;
             $company_name=$this->user_model->get_company_name_by_id($id_comp);
@@ -112,7 +110,7 @@ public function logout_form(){
 public function logout(){
 
 	
-    if($this->user_model->check_oper_logout(trim($_POST['oper_log']),trim($_POST['oper_pass']))){
+    if($this->user_model->check_oper_logout(trim($_POST['log']),trim($_POST['pass']))){
         unset($_SESSION['id_comp_oper']);
         
         setcookie('id_comp_oper', "", time()-3600,'/');
@@ -124,32 +122,5 @@ public function logout(){
 
    }
      
-}
-public function change_oper_password_form(){
-        $this->load->view('change_oper_pass_form');
-
-}
-public function change_oper_password(){
-	$oper_log=trim($_POST['old_login']);
-	$oper_pass=trim($_POST['old_password']);
-	$new_log=trim($_POST['new_login']);
-    $new_pass1=trim($_POST['new_password1']);
-    $new_pass2=trim($_POST['new_password2']);
-	if($new_pass1!==$new_pass2){
-         $_SESSION['change_error']="Գաղտնաբառերը չեն համընկնում";
-         redirect(base_url("user/change_oper_passոօռդ_form"));
-	}
-
-	$res=$this->user_model->check_oper($oper_log,$oper_pass);
-    if($res) {
-        $id =$res->id;
-        $this->user_model->update_oper($id,$new_log,$new_pass1);
-        redirect(base_url("user/index"));
-    }
-    else{
-         $_SESSION['change_error']="Սխալ մուտքանուն կամ գաղտնաբառ";
-         redirect(base_url("user/change_oper_password_form"));
-    }
-
 }
 }

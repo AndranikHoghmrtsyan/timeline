@@ -8,11 +8,14 @@ class Admin_model extends CI_Model {
 
   }
 	public function check_admin($log,$pass){
-        $this->db->select('id_comp,role');
-        return $this->db->get_where('admin',['password'=>$pass,'login'=>$log])->row();
+       $this->db->select('id_comp,role');
+       $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log]);
+       if($res)
+          return $res->row();
+      return false;
 	}
    public function get_companys_data(){
-    $query="SELECT admin.*,name from admin join company on company.id=admin.id_comp";
+    $query="SELECT admin.*,name from admin join company on company.id=admin.id_comp where admin.role='admin'";
       return $this->db->query($query)->result_array();
   }
 	public function get_current_userdata($id_comp){
@@ -193,28 +196,30 @@ public function add_user($name,$surname,$password){
       $this->db->update('timeline', $data1); 
       return $this->db->last_query();
   }
-  public function change_password($pass,$new_pass){
-      $data = array(
-         'password' => $new_pass
-      );
-      $this->db->where('password', $pass);
-      $res=$this->db->update('admin', $data); 
-      if(!$res)
-         return false;
-      return true;   
+  public function change_password($old_log,$old_pass,$new_log,$new_pass){
+      if($this->check_admin($old_log,$old_pass)){
+           $data =['password' => $new_pass,'login'=>$new_log];
+           $this->db->where('password', $old_pass);
+           $this->db->where('login', $old_log);
+           if($this->db->update('admin', $data))
+              return true;
+           return false; 
+      }
+      else  return false;
   }
- public function get_worker_year_data($id){
+
+  public function get_worker_year_data($id){
      $sql="SELECT MONTH(`day`) AS month,sum(`late`) AS total_late,count(`late`) AS count_late FROM `timeline` 
         WHERE  `user_id`=$id AND YEAR(`day`)=YEAR(curdate()) AND late>5 GROUP BY month ORDER BY month";
      return $this->db->query($sql)->result_array();
 
- } 
- public function get_available_months($id_comp,$year){
+  } 
+  public function get_available_months($id_comp,$year){
       $sql="SELECT distinct MONTH(`day`) AS month FROM `timeline`,users 
         WHERE  `user_id`=`users`.id AND id_comp=$id_comp AND YEAR(`day`)=$year ORDER BY month";
      return $this->db->query($sql)->result_array();
 
- }
+}
 public function get_available_years($id_comp){
 
    $sql="SELECT distinct YEAR(`day`) AS year FROM `timeline`,users 
@@ -224,6 +229,12 @@ public function get_available_years($id_comp){
 /////////////////
 public function get_companys(){
      return $this->db->get('company')->result_array();
+
+}
+public function add_firm($name){
+   $this->db->insert('company', ['name' => $name]);
+   $id=$this->db->query("SELECT MAX(id) as id FROM company")->row()->id;
+   $this->db->insert('admin', ['id_comp' =>$id,'role'=>'admin']); 
 
 }
 

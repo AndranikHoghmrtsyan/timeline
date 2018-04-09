@@ -3,14 +3,18 @@
 <div class="col-sm-6 col-sm-offset-3">
 
 <form method="post" action="<?php echo base_url('admin/change_password')?>">
-<input type="password" class="input-lg form-control" name="password"  placeholder="Հին գաղտնաբառը" autocomplete="off" required>
+<input type="text" class="input-lg form-control" name="old_login"  placeholder="Հին մուտքանուն" autocomplete="off" required>
+<br/>	
+<input type="password" class="input-lg form-control" name="old_password"  placeholder="Հին գաղտնաբառը" autocomplete="off" required>
 <br/>
-<input type="password" class="input-lg form-control" name="password1"  placeholder="Նոր գաղտնաբառը" autocomplete="off" required>
+<input type="text" class="input-lg form-control" name="new_login"  placeholder="Նոր մուտքանուն" autocomplete="off" required>
+<br/>	
+<input type="password" class="input-lg form-control" name="new_password1"  placeholder="Նոր գաղտնաբառը" autocomplete="off" required>
 <br/>
-<input type="password" class="input-lg form-control" name="password2"  placeholder="Կրկնել գաղտնաբառը" autocomplete="off" required>
+<input type="password" class="input-lg form-control" name="new_password2"  placeholder="Կրկնել գաղտնաբառը" autocomplete="off" required>
 <br/>
 
-<input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Փոխել գաղտնաբառը..." value="Փոխել գաղտնաբառը">
+<input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg"  value="Փոխել տվյալները">
 
 </form>
 <?php

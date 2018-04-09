@@ -2,13 +2,7 @@
 <div id="content" class="container">
   
                
-      <button type="button" id="new_firm_btn" class="btn btn-info" data-toggle="collapse" data-target="#new_firm">Ավելացնել</button>
-      <br/>
-      <br/>
-      <div id="new_firm" class="collapse">
-          <input type="text" id="firmName">
-          <button class="btn btn-success" id="addFirm">Գրանցել</button>
-      </div>
+     
       <table class="table table-bordered firms_list">
     <thead>
       <tr>
@@ -16,8 +10,6 @@
         <th >Կազմակերպություն</th>
         <th >Մուտքանուն</th>
         <th >Գաղտնաբառ</th>
-        <th >Մուտքանուն1</th>
-        <th >Գաղտնաբառ1</th>
         <th></th>
       </tr>
     </thead>
@@ -30,22 +22,25 @@
     	$name=$row['name'];
       $login=$row['login'];
       $password=$row['password'];
-      $login1=$row['oper_log'];
-      $password1=$row['oper_pass'];
 ?>      
      <tr id=<?=$id?>>
      <td contenteditable='true' class='name1'><?=$name?></td>
-     <td contenteditable='true' class='log'><?=$login?></td>
-     <td contenteditable='true' class='pass'><?=$password?></td>
-      <td contenteditable='true' class='log1'><?=$login1?></td>
-     <td contenteditable='true' class='pass1'><?=$password1?></td>
-     <td><button class="update_worker btn btn-success">Խմբագրել</button> </td>
+     <td  class='log'><?=$login?></td>
+     <td  class='pass'><?=$password?></td>
+     <td><button class="update_worker btn btn-info">Խմբագրել</button> </td>
      <td><button class="delete_worker btn btn-danger">Ջնջել</button> </td>
      </tr>
 <?php        
     }
   
     ?>
+    <tr>
+     <td contenteditable='true' id="firmName"></td> 
+     <td contenteditable='true' id="firmLog"></td> 
+     <td contenteditable='true' id="firmPass"></td> 
+     <td colspan><button class="btn btn-success" id="addFirm">Ավելացնել</button></td>
+     </td> 
+     </tr>
     </tbody>
   </table>
         <!-- modal delete -->
