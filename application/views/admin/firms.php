@@ -1,12 +1,8 @@
 
-<div id="content" class="container-fluid">
-    <div class="row">
-       <!-- first column -->
-       
-       <div class="col-sm-4" >
-        
-       <div><button id="add_person" class="btn btn-primary btn-lg">Ավելացնել</button></div>
-      
+<div id="content" class="container">
+  
+               
+     
       <table class="table table-bordered firms_list">
     <thead>
       <tr>
@@ -14,37 +10,37 @@
         <th >Կազմակերպություն</th>
         <th >Մուտքանուն</th>
         <th >Գաղտնաբառ</th>
-        <th >Մուտքանուն1</th>
-        <th >Գաղտնաբառ1</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
     <?php
    
-   // echo '<pre>';
- if(!empty($companys_data))
+    if(!empty($companys_data))
     foreach($companys_data as $row){
     	$id=$row['id'];
     	$name=$row['name'];
       $login=$row['login'];
       $password=$row['password'];
-      $login1=$row['oper_log'];
-      $password1=$row['oper_pass'];
 ?>      
      <tr id=<?=$id?>>
      <td contenteditable='true' class='name1'><?=$name?></td>
-     <td contenteditable='true' class='log'><?=$login?></td>
-     <td contenteditable='true' class='pass'><?=$password?></td>
-      <td contenteditable='true' class='log1'><?=$login1?></td>
-     <td contenteditable='true' class='pass1'><?=$password1?></td>
-     <td><button class="update_worker btn btn-success">Խմբագրել</button> </td>
+     <td  class='log'><?=$login?></td>
+     <td  class='pass'><?=$password?></td>
+     <td><button class="update_worker btn btn-info">Խմբագրել</button> </td>
      <td><button class="delete_worker btn btn-danger">Ջնջել</button> </td>
      </tr>
 <?php        
     }
   
     ?>
+    <tr>
+     <td contenteditable='true' id="firmName"></td> 
+     <td contenteditable='true' id="firmLog"></td> 
+     <td contenteditable='true' id="firmPass"></td> 
+     <td colspan><button class="btn btn-success" id="addFirm">Ավելացնել</button></td>
+     </td> 
+     </tr>
     </tbody>
   </table>
         <!-- modal delete -->
@@ -72,11 +68,11 @@
 
         <!-- end modal delete  -->
        <!-- end of first column -->
-       </div>
-<div class="col-sm-3" ></div>
+     <!--   </div> -->
+<!-- <div class="col-sm-3" ></div> -->
        <!-- second column -->
-      <div class="col-sm-5" >
-       <div id="registr_form">
+    <!--   <div class="col-sm-5" > -->
+      <!--  <div id="registr_form">
          
             <div class="form-group">
                <label for="name">Կազմակերպության անունը:</label>
@@ -95,13 +91,13 @@
            <br><br>
         <div id="error" style="color:red"></div>
       </div>
-      </div>
+      </div> -->
       <!-- thired column -->
     
      
       <!--end of thired column -->
       
 <!-- end of row       -->
-</div>  
+<!-- </div>  --> 
 <!-- end of content    -->
 </div>

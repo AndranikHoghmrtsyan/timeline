@@ -19,16 +19,16 @@
   <form action="<?php echo base_url('user/check_oper')?>" method="post">
     <div class="form-group">
       <label for="login">Մուտքանուն:</label>
-      <input type="password" class="form-control" id="login" placeholder="Մուտքանուն..." name="oper_log">
+      <input type="password" class="form-control" id="login" placeholder="Մուտքանուն..." name="log">
     </div>
     <div class="form-group">
       <label for="pwd">Գաղտնաբառ:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Գաղտնաբառ..." name="oper_pass">
+      <input type="password" class="form-control" id="pwd" placeholder="Գաղտնաբառ..." name="pass">
     </div>
     <button type="submit" class="btn btn-success">Մուտք</button>
   </form>
   <br/>
-<h3><a href="<?=base_url('user/change_oper_password_form')?>">Փոխել Գաղտնաբառը</a></h3>
+
 <br/>
   <h4 style="color:red">
   <?php

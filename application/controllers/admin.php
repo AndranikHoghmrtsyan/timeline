@@ -181,17 +181,19 @@ class Admin extends CI_Controller {
 
     public function change_password(){
     	
-        $pass=$this->input->post('password');
-        $new_pass1=$this->input->post('password1');
-        $new_pass2=$this->input->post('password2');
+        $old_pass=$this->input->post('old_password');
+        $old_log=$this->input->post('old_login');
+        $new_log=$this->input->post('new_login');
+        $new_pass1=$this->input->post('new_password1');
+        $new_pass2=$this->input->post('new_password2');
         if($new_pass1!=$new_pass2){
-     	    $_SESSION['msg']="password not matching";
+     	    $_SESSION['msg']="Գաղտնաբառերը չեն համընկնում";
      	    redirect(base_url('admin/change_password_form'));
         }
-        if(!$this->admin_model->change_password($pass,$new_pass1))
-            $_SESSION['msg']="password on use";
+        if(!$this->admin_model->change_password($old_log,$old_pass,$new_log,$new_pass1))
+            $_SESSION['msg']="Սխալ մուտքանուն կամ գաղտնաբառ";
         else  
-            $_SESSION['msg']="Your password is changed successfuly";
+            $_SESSION['msg']="Ձեր տվյալներն հաջողությամբ փոխվել են";
         redirect(base_url('admin/change_password_form')); 
 
     }
@@ -232,6 +234,11 @@ class Admin extends CI_Controller {
          redirect(base_url("admin/$page")); 
 
 
+    }
+    public function add_firm(){
+        $name=$this->input->post('name');
+     echo $name."fgfgfgfgfgfgfgfg";
+        $this->admin_model->add_firm($name);
     }
     
 }

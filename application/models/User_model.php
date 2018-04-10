@@ -4,9 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_model extends CI_Model {
 
 
-   public function check_oper($oper_log,$oper_pass){
-        $this->db->select('id,id_comp');
-        return $this->db->get_where('admin',['oper_pass'=>$oper_pass,'oper_log'=>$oper_log])->row();
+   public function check_oper($log,$pass){
+        $this->db->select('id_comp');
+       $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log]);
+       if($res)
+       	   return $res->row()->id_comp;
+       	else return null;
         
     }
     public function get_users_by_company($id_comp)
@@ -89,14 +92,9 @@ class User_model extends CI_Model {
 
 
 	}
-	public function update_oper($id,$new_log,$new_pass){
-           $data = ['oper_pass' => $new_pass,'oper_log'=>$new_log];
-           $this->db->where('id', $id);
-           $this->db->update('admin', $data); 
-	}
-	public function check_oper_logout($oper_log,$oper_pass){
+	public function check_oper_logout($log,$pass){
 		     $this->db->select('id');
-             return  $this->db->get_where('admin', ['oper_log' => $oper_log,'oper_pass'=>$oper_pass])->row()->id;
+             return  $this->db->get_where('admin', ['login' => $log,'password'=>$pass])->row()->id;
 
 	}
 }
