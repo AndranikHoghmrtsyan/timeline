@@ -18,17 +18,17 @@
    
     if(!empty($companys_data))
     foreach($companys_data as $row){
-    	$id=$row['id'];
+    	$id_comp=$row['id_comp'];
     	$name=$row['name'];
       $login=$row['login'];
       $password=$row['password'];
 ?>      
-     <tr id=<?=$id?>>
+     <tr id=<?=$id_comp?>>
      <td contenteditable='true' class='name1'><?=$name?></td>
      <td  class='log'><?=$login?></td>
      <td  class='pass'><?=$password?></td>
-     <td><button class="update_worker btn btn-info">Խմբագրել</button> </td>
-     <td><button class="delete_worker btn btn-danger">Ջնջել</button> </td>
+     <td><button class="update_firm btn btn-info">Խմբագրել</button> </td>
+     <td><button class="delete_firm btn btn-danger">Ջնջել</button> </td>
      </tr>
 <?php        
     }
@@ -43,6 +43,7 @@
      </tr>
     </tbody>
   </table>
+  <h3 id="msg" style="color:red"></h3>
         <!-- modal delete -->
 
 
@@ -58,8 +59,8 @@
         <div class=modal-body></div>
       </div>
       <div class="modal-footer" style="background-color:#cccccc;">
-        <button type="button" class="btn btn-default" id="modal-btn-si">Այո</button>
-        <button type="button" class="btn btn-primary" id="modal-btn-no" style="background-color:#EF5900;color:white">Ոչ</button>
+        <button type="button" class="btn btn-default" id="yes">Այո</button>
+        <button type="button" class="btn btn-primary" id="no" style="background-color:#EF5900;color:white">Ոչ</button>
       </div>
     </div>
   </div>

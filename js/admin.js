@@ -370,17 +370,71 @@ $(this).css('cursor','pointer');
 
   $('#addFirm').click(function(){
        var name=$('#firmName').text();
-       alert(name)
+       var log=$('#firmLog').text();
+       var pass=$('#firmPass').text();
+       if(name==""||log==""||pass==""){
+            $('#msg').text('Լրացրեք բոլոր դաշտերը');
+            return;
+       }
        $.ajax({
           url:base_url+'admin/add_firm',
           type:'post',
-          data:{name:name},
+          data:{name:name,log:log,pass:pass},
           success:function(data){
-            alert(data)
-              //location.reload();
+              location.reload();
           }
       })
   })
+  $('.update_firm').click(function(){
 
+     var tr=$(this).parents('tr');
+     var id=tr.attr('id');
+     var name=tr.find('.name1').text();
+      $.ajax({
+          url:base_url+'admin/update_firm',
+          type:'post',
+          data:{id:id,name:name},
+          success:function(data){
+          }
+      })
+  })
+  //delete firm
+
+var modalFirm = function(callback){
+  
+  $(".delete_firm").on("click", function(){
+    selectedFirm=$(this).parents('tr');
+   
+    var name=selectedFirm.find('.name1').text();
+    
+    var data="Դուք իրոք ուզում եք ջնջել<br> "+name+" ի<br> բոլոր տվյալները";
+    $('.modal-body').html(data)
+    $("#mi-modal").modal('show');
+  });
+
+  $("#yes").on("click", function(){
+    callback(true);
+    $("#mi-modal").modal('hide');
+  });
+  
+  $("#no").on("click", function(){
+    callback(false);
+    $("#mi-modal").modal('hide');
+  });
+};
+
+modalFirm(function(confirm){
+    if(confirm){
+      var id=selectedFirm.attr('id');
+        $.ajax({
+           url:base_url+'admin/delete_firm',
+           type:'post',
+           data:{id:id},
+           success:function(data){
+              selectedFirm.remove();
+          }
+       });
+    }
+});
 
 });
