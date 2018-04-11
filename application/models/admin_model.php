@@ -231,11 +231,25 @@ public function get_companys(){
      return $this->db->get('company')->result_array();
 
 }
-public function add_firm($name){
+public function add_firm($name,$log,$pass){
    $this->db->insert('company', ['name' => $name]);
-   $id=$this->db->query("SELECT MAX(id) as id FROM company")->row()->id;
-   $this->db->insert('admin', ['id_comp' =>$id,'role'=>'admin']); 
+   $id_comp=$this->db->query("SELECT MAX(id) as id FROM company")->row()->id;
+   $this->db->insert('admin', ['id_comp' =>$id_comp,'login'=>$log,'password'=>$pass,'role'=>'admin']); 
 
+}
+public function update_firm($id,$name){
+  $data = array(
+         'name'=>$name
+       );
+  $this->db->where(['id'=>$id]); 
+  $this->db->update('company', $data); 
+}
+
+public function delete_firm($id_comp){
+      $this->db->where('id',$id_comp);
+      $this->db->delete('company'); 
+      $this->db->where('id_comp',$id_comp);
+      $this->db->delete('admin'); 
 }
 
 }

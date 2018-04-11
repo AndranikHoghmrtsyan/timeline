@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 09 2018 г., 15:24
+-- Время создания: Апр 10 2018 г., 16:27
 -- Версия сервера: 5.6.24
 -- Версия PHP: 5.6.8
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `login` varchar(15) NOT NULL,
   `password` varchar(20) NOT NULL,
   `role` varchar(5) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `admin`
@@ -43,8 +43,7 @@ INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `role`) VALUES
 (2, 2, 'ani', '222', 'admin'),
 (3, 3, 'hermine', '333', 'admin'),
 (4, 4, 'lusine', '444', 'admin'),
-(5, 2, 'super', '000', 'super'),
-(6, 5, '', '', 'admin');
+(5, 2, 'super', '000', 'super');
 
 -- --------------------------------------------------------
 
@@ -55,7 +54,7 @@ INSERT INTO `admin` (`id`, `id_comp`, `login`, `password`, `role`) VALUES
 CREATE TABLE IF NOT EXISTS `company` (
   `id` int(2) NOT NULL,
   `name` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `company`
@@ -65,8 +64,7 @@ INSERT INTO `company` (`id`, `name`) VALUES
 (1, 'ColibriLab'),
 (2, 'Colibri'),
 (3, 'ARS Systems'),
-(4, 'Arnology'),
-(5, 'ddd');
+(4, 'Arnology');
 
 -- --------------------------------------------------------
 
@@ -200,7 +198,7 @@ INSERT INTO `timeline` (`id`, `user_id`, `day`, `begin`, `lunch_begin`, `lunch_e
 (158, 36, '2018-04-07', '09:02:59', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', -57),
 (159, 37, '2018-04-07', '09:03:03', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', -57),
 (160, 38, '2018-04-07', '09:03:11', NULL, NULL, NULL, '00:00:09', '19:00:00', 'Բացատրություն...', 543),
-(161, 27, '2018-04-09', '16:04:20', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 364),
+(161, 27, '2018-04-09', '16:04:00', '00:00:00', '00:00:00', '00:00:00', '10:00:00', '19:00:00', 'Բացատրություն...', 364),
 (162, 28, '2018-04-09', '16:04:24', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 364),
 (163, 29, '2018-04-09', '16:04:29', NULL, NULL, NULL, '23:00:00', '19:00:00', 'Բացատրություն...', -416),
 (164, 30, '2018-04-09', '16:04:33', NULL, NULL, NULL, '10:00:00', '19:00:00', 'Բացատրություն...', 365),
@@ -259,7 +257,7 @@ INSERT INTO `users` (`id`, `name`, `surname`, `password`, `id_comp`, `begin_time
 -- Индексы таблицы `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `password` (`password`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `company`
@@ -287,12 +285,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `timeline`
 --
@@ -303,16 +301,6 @@ ALTER TABLE `timeline`
 --
 ALTER TABLE `users`
   MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `users`
---
-ALTER TABLE `users`
-ADD CONSTRAINT `FK_user` FOREIGN KEY (`id_comp`) REFERENCES `company` (`id`);
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

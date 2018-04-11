@@ -237,8 +237,18 @@ class Admin extends CI_Controller {
     }
     public function add_firm(){
         $name=$this->input->post('name');
-     echo $name."fgfgfgfgfgfgfgfg";
-        $this->admin_model->add_firm($name);
+        $log=$this->input->post('log');
+        $pass=$this->input->post('pass');
+        $this->admin_model->add_firm($name,$log,$pass);
+    }
+    public function update_firm(){
+       $name=$this->input->post('name');
+       $id=$this->input->post('id');
+       $this->admin_model->update_firm($id,$name);
+    }
+    public function delete_firm(){
+        $id_comp=$this->input->post('id');
+        $this->admin_model->delete_firm($id_comp);
     }
     
 }
