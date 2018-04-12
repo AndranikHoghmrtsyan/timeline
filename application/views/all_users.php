@@ -33,7 +33,7 @@ $date=str_ireplace($eng,$arm,$date);
    ?>
 <div  class="container-fluid">
  
-    <div class="row" style="background-color:#73AB02;"> 
+    <div class="row" style="background-color:#5BC0DE;"> 
          <div class="col-sm-2" >
              <h1 style="color:white"> <?php echo $company_name?></h1>
          </div>
@@ -50,7 +50,7 @@ $date=str_ireplace($eng,$arm,$date);
          </div>
    </div>
 </div>
-<div style="height:5px;background-color:yellow"></div>
+<div style="height:5px;background-color:#487FA0"></div>
 <br/>
 <br/>
 <div id="content" class="container">
@@ -80,7 +80,7 @@ $date=str_ireplace($eng,$arm,$date);
 <div class="col-sm-2" ></div>
        <!-- second column -->
       <div class="col-sm-5" >
-           <div id="user_name_and_image"></div>
+           <div id="user_name_and_image" style="color:#487FA0"></div>
            <br>
             <br>
       <br>
@@ -88,7 +88,7 @@ $date=str_ireplace($eng,$arm,$date);
         <!--   login form  -->
            <div id="login_form" >
                
-               <input type="text" id="password" placeholder="Գաղտնաբառ:" >
+               <input type="password" id="password" placeholder="Գաղտնաբառ:" style="color:#487FA0">
               <br>
                <br>
                <input type="button" id="login" class="btn btn-success" value="ՄՈՒՏՔ">
@@ -104,8 +104,8 @@ $date=str_ireplace($eng,$arm,$date);
         <tr><td id="begin_real" class="real_time"></td><td id="lunch_begin_real" class="real_time"></td><td id="lunch_end_real" class="real_time"></td><td id="end_real" class="real_time"></td></tr>
         <tr> 
           <td colspan=4>  
-             <label for="desc">Բացատրություն:</label>
-            <textarea  class="form-control" rows="2" id="desc">Եսիմ...</textarea>
+             <label for="desc" style="color:#487FA0">Բացատրություն:</label>
+            <textarea  class="form-control" rows="2" id="desc" style="color:#487FA0"></textarea>
           </td>
          </tr> 
           <tr><td colspan=3><button class="profile btn btn-success">Փոխել գաղտնաբառը</button></td><td><button class="exit_profile btn btn-danger">Ելք</button></td></tr>

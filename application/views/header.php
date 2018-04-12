@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/user_style.css')?>">
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" id="nav1">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" >Կազմակերպություն</a>
