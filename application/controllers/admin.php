@@ -37,8 +37,8 @@ class Admin extends CI_Controller {
 /////////////////
 	public function check_admin()
 	{
-		$pass=trim($this->input->post('password'));
-        $log=trim($this->input->post('login'));
+		$pass=trim($this->input->post('pass'));
+        $log=trim($this->input->post('log'));
 		$res=$this->admin_model->check_admin($log,$pass);
         
         if($res){
