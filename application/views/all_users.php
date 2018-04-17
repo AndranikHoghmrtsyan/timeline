@@ -46,7 +46,8 @@ $date=str_ireplace($eng,$arm,$date);
          </div>
           <div class="col-sm-2" >
          
-             <h1><a href="<?=base_url('user/logout_form')?>"><button class="profile btn btn-danger" style="color:white">Ելք</button></a></h1>
+             <h1><a href="<?=base_url('user/logout_form')?>"><button class="
+              btn btn-danger" style="color:white">Ելք</button></a></h1>
          </div>
    </div>
 </div>

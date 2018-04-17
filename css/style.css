@@ -115,7 +115,14 @@ img { max-width: 100%; }
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
 	text-align: left;
 }
-
+.admin_top{
+	overflow: hidden;
+	padding: 0 25px 15px 25px;
+	background: 	#009EDF;
+	background: 	#009EDF;
+	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
+	text-align: left;
+}
 .form-top-left {
 	float: left;
 	width: 75%;
@@ -143,7 +150,13 @@ img { max-width: 100%; }
 	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
 	text-align: left;
 }
-
+.admin_bottom {
+	padding: 25px 25px 30px 25px;
+	background: #55B0DD;
+	background:#55B0DD;
+	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
+	text-align: left;
+}
 .form-bottom form textarea {
 	height: 100px;
 }

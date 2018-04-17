@@ -14,31 +14,28 @@
   <div class="col-sm-4" >
   </div>
   <div class="col-sm-4" >
-  
-  <h3>Մուտք</h3>
-  <form action="<?php echo base_url('user/check_oper')?>" method="post">
+  <h2>Մուտք</h2>
+  <form action="<?php echo base_url('admin/check_admin')?>" method="post">
     <div class="form-group">
       <label for="login">Մուտքանուն:</label>
-      <input type="password" class="form-control" id="login" placeholder="Մուտքանուն..." name="log">
+      <input type="password" class="form-control" id="login" placeholder="նշանաբառ..." name="login">
     </div>
     <div class="form-group">
       <label for="pwd">Գաղտնաբառ:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Գաղտնաբառ..." name="pass">
+      <input type="password" class="form-control" id="pwd" placeholder="ծածկագիր..." name="password">
     </div>
-    <button type="submit" class="btn btn-success">Մուտք</button>
+    <button type="submit" class="btn btn-default">Մուտք</button>
   </form>
-  <br/>
-
-<br/>
-  <h4 style="color:red">
   <?php
-if(isset($_SESSION['login_error'])){
-    echo $_SESSION['login_error'];
-    unset($_SESSION['login_error']);
+if(isset($_SESSION['error'])){
+     echo "<h3>".$_SESSION['error']."</h3>";
+     unset($_SESSION['error']);
+
 }
 
+
+
   ?>
-</h4>
 </div>
 </div>
 <div class="col-sm-4" >
