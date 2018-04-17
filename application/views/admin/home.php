@@ -13,7 +13,7 @@
                   $dayname=$week_day[$value[0]['weekday']];
     ?>               
                   <table class='table table-bordered days' id=<?=$day?>>
-                      <caption><h4 style="color:#F05746;text-align:center"><?="$monthname $day $dayname"?></h4></caption>
+                      <caption><h3 style="color:black;text-align:center"><?="$monthname $day $dayname"?></h3></caption>
                       <thead>
                           <tr>
                               <th></th>

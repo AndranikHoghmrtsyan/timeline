@@ -182,7 +182,6 @@ class Admin extends CI_Controller {
     public function change_password(){
     	
         $old_pass=$this->input->post('old_password');
-        $old_log=$this->input->post('old_login');
         $new_log=$this->input->post('new_login');
         $new_pass1=$this->input->post('new_password1');
         $new_pass2=$this->input->post('new_password2');
@@ -190,7 +189,7 @@ class Admin extends CI_Controller {
      	    $_SESSION['msg']="Գաղտնաբառերը չեն համընկնում";
      	    redirect(base_url('admin/change_password_form'));
         }
-        if(!$this->admin_model->change_password($old_log,$old_pass,$new_log,$new_pass1))
+        if(!$this->admin_model->change_password($old_pass,$new_log,$new_pass1))
             $_SESSION['msg']="Սխալ մուտքանուն կամ գաղտնաբառ";
         else  
             $_SESSION['msg']="Ձեր տվյալներն հաջողությամբ փոխվել են";

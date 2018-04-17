@@ -50,7 +50,7 @@
                                 <label class="sr-only" for="form-password">Գաղտնաբառ</label>
                                 <input type="password" name="pass" placeholder="Password..." class="form-password form-control" id="form-password">
                               </div>
-                              <button type="submit" class="btn">Ելք</button>
+                              <button type="submit" class="btn btn-danger logout">Ելք</button>
                           </form>
                                                     <h4 style="color:red">
                            <?php

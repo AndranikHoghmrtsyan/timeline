@@ -196,18 +196,20 @@ public function add_user($name,$surname,$password){
       $this->db->update('timeline', $data1); 
       return $this->db->last_query();
   }
-  public function change_password($old_log,$old_pass,$new_log,$new_pass){
-      if($this->check_admin($old_log,$old_pass)){
+  public function change_password($old_pass,$new_log,$new_pass){
+      if($this->check_pass($old_pass)){
            $data =['password' => $new_pass,'login'=>$new_log];
            $this->db->where('password', $old_pass);
-           $this->db->where('login', $old_log);
            if($this->db->update('admin', $data))
               return true;
            return false; 
       }
       else  return false;
   }
-
+  private function check_pass($pass){
+      $this->db->select('id_comp');
+      return $this->db->get_where('admin',['password'=>$pass])->num_rows();
+  }
   public function get_worker_year_data($id){
      $sql="SELECT MONTH(`day`) AS month,sum(`late`) AS total_late,count(`late`) AS count_late FROM `timeline` 
         WHERE  `user_id`=$id AND YEAR(`day`)=YEAR(curdate()) AND late>5 GROUP BY month ORDER BY month";

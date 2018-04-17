@@ -44,7 +44,7 @@
                           <form role="form" action="<?php echo base_url('admin/check_admin')?>" method="post" class="login-form">
                             <div class="form-group">
                              
-                                <input type="text" name="log" value="Մուտքանուն..." class="form-username form-control" id="form-username" >
+                                <input type="text" name="log" placeholder="Մուտքանուն..." class="form-username form-control" id="form-username" >
                               </div>
                               <div class="form-group">
                                 
