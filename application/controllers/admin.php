@@ -82,6 +82,8 @@ class Admin extends CI_Controller {
        redirect(base_url('admin/index'));
 	}
     public function firms(){
+       if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index')); 
        $data['companys_data']=$this->admin_model->get_companys_data();
        $this->load_view('firms',$data);
 
@@ -165,7 +167,8 @@ class Admin extends CI_Controller {
     }
 
 	public function year(){
-		
+		if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $id_comp=$_SESSION['id_comp'];
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['month_data']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
@@ -180,7 +183,8 @@ class Admin extends CI_Controller {
     }
 
     public function change_password(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $old_pass=$this->input->post('old_password');
         $new_log=$this->input->post('new_login');
         $new_pass1=$this->input->post('new_password1');
@@ -208,12 +212,14 @@ class Admin extends CI_Controller {
   	   // redirect(base_url('admin/year')); 
     } 
     public function change_year(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $_SESSION['year']=$this->input->post('year');
         redirect(base_url('admin/year')); 
     } 
     public function individual(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $id_comp=$_SESSION['id_comp'];
         $data['companys']=$this->admin_model->get_companys(); 
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
