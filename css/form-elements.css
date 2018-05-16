@@ -45,14 +45,20 @@ textarea:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { co
 input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, 
 textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
 
+.login{
+   background: #5CB85C;
 
+}
+.logout{
+   background: #D9534F;
 
+}
 button.btn {
 	height: 50px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
-    background: #de615e;
+    
     border: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;

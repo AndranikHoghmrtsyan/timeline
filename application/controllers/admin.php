@@ -82,6 +82,8 @@ class Admin extends CI_Controller {
        redirect(base_url('admin/index'));
 	}
     public function firms(){
+       if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index')); 
        $data['companys_data']=$this->admin_model->get_companys_data();
        $this->load_view('firms',$data);
 
@@ -165,7 +167,8 @@ class Admin extends CI_Controller {
     }
 
 	public function year(){
-		
+		if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $id_comp=$_SESSION['id_comp'];
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 
         $data['month_data']=$this->admin_model->get_month_data($id_comp,$_SESSION['month'],$_SESSION['year']); 
@@ -180,9 +183,9 @@ class Admin extends CI_Controller {
     }
 
     public function change_password(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $old_pass=$this->input->post('old_password');
-        $old_log=$this->input->post('old_login');
         $new_log=$this->input->post('new_login');
         $new_pass1=$this->input->post('new_password1');
         $new_pass2=$this->input->post('new_password2');
@@ -190,7 +193,7 @@ class Admin extends CI_Controller {
      	    $_SESSION['msg']="Գաղտնաբառերը չեն համընկնում";
      	    redirect(base_url('admin/change_password_form'));
         }
-        if(!$this->admin_model->change_password($old_log,$old_pass,$new_log,$new_pass1))
+        if(!$this->admin_model->change_password($old_pass,$new_log,$new_pass1))
             $_SESSION['msg']="Սխալ մուտքանուն կամ գաղտնաբառ";
         else  
             $_SESSION['msg']="Ձեր տվյալներն հաջողությամբ փոխվել են";
@@ -209,12 +212,14 @@ class Admin extends CI_Controller {
   	   // redirect(base_url('admin/year')); 
     } 
     public function change_year(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $_SESSION['year']=$this->input->post('year');
         redirect(base_url('admin/year')); 
     } 
     public function individual(){
-    	
+    	if(!isset($_SESSION['role']))
+            redirect(base_url('admin/index'));
         $id_comp=$_SESSION['id_comp'];
         $data['companys']=$this->admin_model->get_companys(); 
         $data['users']=$this->admin_model->get_year_data($id_comp,$_SESSION['year']); 

@@ -13,7 +13,7 @@
                   $dayname=$week_day[$value[0]['weekday']];
     ?>               
                   <table class='table table-bordered days' id=<?=$day?>>
-                      <caption><h4 style="color:#F05746;text-align:center"><?="$monthname $day $dayname"?></h4></caption>
+                      <caption><h3 style="color:black;text-align:center"><?="$monthname $day $dayname"?></h3></caption>
                       <thead>
                           <tr>
                               <th></th>
@@ -30,12 +30,27 @@
                       foreach($value as $row){
                         	$id=$row['id'];
     	                    $begin_time=$row['begin_time1'];
-    	                    $begin=$row['begin'];
+    	                    
     	                    $late=$row['late'];
-    	                    $lunch_begin=$row['lunch_begin'];
-                        	$lunch_end=$row['lunch_end'];
+                          
+                          $begin="--:--";
+                          if($row['begin']!="00:00")
+                              $begin=$row['begin'];
+
+                          $lunch_begin="--:--";
+                          if($row['lunch_begin']!="00:00")
+    	                        $lunch_begin=$row['lunch_begin'];
+
+                          $lunch_end="--:--";
+                          if($row['lunch_end']!="00:00")
+                              $lunch_end=$row['lunch_end'];  
+                        	
     	                    $end_time=$row['end_time1'];
-    	                    $end=$row['end'];
+
+                          $end="--:--";
+                          if($row['end']!="00:00")
+                              $end=$row['end'];  
+    	                    
     	                    $description=$row['description'];
                           $src=base_url($row['image']);
                           if($late>0)
