@@ -11,7 +11,7 @@ class Admin_model extends CI_Model {
        $this->db->select('id_comp,role');
        $res=$this->db->get_where('admin',['password'=>$pass,'login'=>$log]);
        if($res)
-          return $res->row();
+          return $res->row_array();
       return false;
 	}
    public function get_companys_data(){
